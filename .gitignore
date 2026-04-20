@@ -1,0 +1,20 @@
+# 민감정보
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Windows 시스템 파일
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# 임시 파일
+*.tmp
+*.log
+*.bak
+~$*
