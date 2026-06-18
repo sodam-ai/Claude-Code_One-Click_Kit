@@ -1,20 +1,17 @@
-# 민감정보
-.env
-.env.*
-*.key
-*.pem
-*.p12
-*.pfx
-secrets/
-credentials/
+# --- 로컬 도구/세션 부산물 (배포 제외) ---
+.browser-pilot/
+.omc/
+.plugin-config/
+.remember/
+.pair-programming-session.md
 
-# Windows 시스템 파일
-Thumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# 임시 파일
+# --- 빌드/임시 ---
+_pdfstyle.html
 *.tmp
 *.log
-*.bak
-~$*
+
+# --- OS / 편집기 ---
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp

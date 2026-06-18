@@ -1,0 +1,28 @@
+Claude Code One-Click Kit
+Copyright 2026 SoDam AI Studio
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+------------------------------------------------------------------------
+DISCLAIMER / 고지
+------------------------------------------------------------------------
+
+This is an UNOFFICIAL helper tool. It is NOT affiliated with, endorsed by,
+or sponsored by Anthropic.
+
+- This kit does not bundle or redistribute Claude Code. It downloads and
+  installs Claude Code from Anthropic's official source at runtime:
+      https://claude.ai/install.ps1
+- "Claude", "Claude Code", and "Anthropic" are trademarks of Anthropic.
+- Use of Claude Code is governed by Anthropic's own terms, policies, and
+  license. Using Claude Code requires a paid Anthropic plan or account.
+
+이 키트는 비공식 도우미이며 Anthropic 과 무관합니다(제휴·보증·후원 아님).
+- 키트는 Claude Code 를 포함/재배포하지 않으며, 실행 시 Anthropic 공식
+  주소(https://claude.ai/install.ps1)에서 내려받아 설치합니다.
+- "Claude", "Claude Code", "Anthropic" 은 Anthropic 의 상표입니다.
+- Claude Code 사용은 Anthropic 의 약관·정책·라이선스를 따르며,
+  유료 플랜 또는 계정이 필요합니다.
+
+No warranty is provided. Use at your own risk.
+별도의 보증을 제공하지 않으며, 사용에 따른 책임은 사용자에게 있습니다.
