@@ -1,0 +1,3 @@
+# Windows 배치 파일은 항상 CRLF (zip 다운로드에서도 cmd 오작동 방지)
+*.bat text eol=crlf
+*.cmd text eol=crlf
