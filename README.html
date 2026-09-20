@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code 원클릭 키트 (One-Click Kit)</title>
+<meta name="description" content="Windows에서 Claude Code를 번호 메뉴로 설치·실행·관리하는 한국어 도우미의 사용 설명서">
+<style>
+:root{--bg:#f6f7f9;--fg:#1b232c;--soft:#4c5a68;--rule:#d6dce2;--accent:#0b6b6b;--code-bg:#e8edf1;--quote:#eaf2f2;--warn:#8a5200;--th:#e1e8ed}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#11171c;--fg:#e3e9ee;--soft:#a5b2bd;--rule:#28343d;--accent:#5cc6c6;--code-bg:#1a242b;--quote:#16252a;--warn:#e6ac55;--th:#1d2a32}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 "Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;padding-inline:18px;padding-block:28px 80px}
+main{max-width:860px;margin-inline:auto}
+h1{font-size:1.9rem;line-height:1.3;margin:.2em 0 .5em;text-wrap:balance}
+h2{font-size:1.4rem;margin:2.2em 0 .6em;padding-bottom:.3em;border-bottom:2px solid var(--rule);scroll-margin-top:12px;text-wrap:balance}
+h3{font-size:1.15rem;margin:1.7em 0 .4em;scroll-margin-top:12px}
+h4{font-size:1.02rem;margin:1.4em 0 .3em}
+p,li{overflow-wrap:anywhere}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:3px}
+code{font:.9em/1.5 Consolas,"Cascadia Mono","D2Coding",monospace;background:var(--code-bg);padding:.1em .4em;border-radius:4px;overflow-wrap:anywhere}
+pre{background:var(--code-bg);padding:14px 16px;border-radius:6px;overflow-x:auto;line-height:1.5}
+pre code{background:none;padding:0;white-space:pre;overflow-wrap:normal}
+blockquote{margin:1.2em 0;padding:.4em 1.1em;background:var(--quote);border-left:4px solid var(--accent);border-radius:0 6px 6px 0}
+blockquote p{margin:.5em 0}
+hr{border:0;border-top:1px solid var(--rule);margin:2em 0}
+.table-wrap{overflow-x:auto;margin:1em 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.95rem}
+th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--th)}
+.a-center{text-align:center}.a-right{text-align:right}
+details{border:1px solid var(--rule);border-radius:6px;padding:.2em 1em;margin:.8em 0}
+summary{cursor:pointer;font-weight:700;padding:.5em 0}
+details[open]>summary{border-bottom:1px solid var(--rule);margin-bottom:.6em}
+ul,ol{padding-left:1.5em}
+li{margin:.25em 0}
+.chrome-top{position:fixed;right:14px;bottom:14px;background:var(--accent);color:var(--bg);padding:.5em .9em;border-radius:999px;text-decoration:none;font-size:.85rem;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+@media print{.chrome-top{display:none}body{background:#fff;color:#000}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main id="top">
+<h1 id="claude-code-원클릭-키트-one-click-kit">Claude Code 원클릭 키트 (One-Click Kit)</h1>
+<blockquote><p>Windows에서 <strong>번호와 화살표만으로</strong> Claude Code를 설치·실행·관리하도록 도와주는 <strong>한국어 도우미</strong>입니다. 컴퓨터·AI·전자기기를 <strong>처음 다루는 분</strong>도 따라 할 수 있도록 어려운 말은 풀어서 적었습니다.</p></blockquote>
+<p><strong>한국어</strong>: <a href="./README.md">README.md</a> · <a href="./README.html">README.html</a> / <strong>English</strong>: <a href="./README.en.md">README.en.md</a> · <a href="./README.en.html">README.en.html</a></p>
+<p>문서 기준일: 2026-09-20 · 라이선스: Apache License 2.0 · 비공식 도우미 (Anthropic과 무관)</p>
+<blockquote><p><strong>시작하기 전에 꼭 읽어 주세요 (5가지)</strong></p>
+<ol><li>이 키트는 <strong>비공식</strong>입니다. Claude Code는 Anthropic의 제품이고, 이 키트는 Anthropic과 제휴·보증·후원 관계가 없습니다.</li><li>Claude Code를 쓰려면 <strong>유료 플랜 또는 계정</strong>이 필요합니다. 무료 Claude.ai 계정만으로는 쓸 수 없습니다.</li><li>이 키트는 <strong>Windows 전용</strong>입니다. (macOS·Linux·휴대폰에서는 쓸 수 없습니다.)</li><li>메뉴 <strong>[3] 시작하기</strong>는 Claude Code를 켤 때 <strong>컴퓨터의 모든 고정 디스크(C:, D: 등)를 "추가 작업 폴더"로 함께 넘깁니다.</strong> 자세한 내용은 <a href="#13-보안과-데이터-흐름">13. 보안과 데이터 흐름</a>에서 꼭 확인하세요.</li><li>메뉴 <strong>[8] 제거</strong>는 파일을 <strong>실제로 지웁니다.</strong> 특히 "전부 지우기"는 되돌릴 수 없습니다.</li></ol></blockquote>
+<h2 id="목차">목차</h2>
+<ul><li><a href="#1-이-키트는-무엇인가요">1. 이 키트는 무엇인가요?</a></li><li><a href="#2-사전-준비물과-필요-프로그램">2. 사전 준비물과 필요 프로그램</a></li><li><a href="#3-다운로드-방법">3. 다운로드 방법</a></li><li><a href="#4-설치-방법">4. 설치 방법</a></li><li><a href="#5-빠른-시작-3단계">5. 빠른 시작 (3단계)</a></li><li><a href="#6-실행-방법">6. 실행 방법</a></li><li><a href="#7-사용-방법">7. 사용 방법</a></li><li><a href="#8-작동-방법">8. 작동 방법</a></li><li><a href="#9-명령어-모음">9. 명령어 모음</a></li><li><a href="#10-폴더-자동-등록-기능-선택">10. 폴더 자동 등록 기능 (선택)</a></li><li><a href="#11-워크플로우">11. 워크플로우</a></li><li><a href="#12-제거-방법">12. 제거 방법</a></li><li><a href="#13-보안과-데이터-흐름">13. 보안과 데이터 흐름</a></li><li><a href="#14-문제오류-대처">14. 문제·오류 대처</a></li><li><a href="#15-자주-묻는-질문-faq">15. 자주 묻는 질문 (FAQ)</a></li><li><a href="#16-업데이트-내용-요약">16. 업데이트 내용 요약</a></li><li><a href="#17-파일문서-위치">17. 파일·문서 위치</a></li><li><a href="#18-라이선스--저작권--상표--상업적-이용">18. 라이선스 · 저작권 · 상표 · 상업적 이용</a></li><li><a href="#19-면책-조항">19. 면책 조항</a></li></ul>
+<h2 id="1-이-키트는-무엇인가요">1. 이 키트는 무엇인가요?</h2>
+<p><strong>Claude Code</strong>는 Anthropic이 만든 AI 도구입니다. 컴퓨터 안에서 말(한국어 포함)로 시키면 파일 정리, 문서 요약, 간단한 프로그램 만들기 같은 일을 도와줍니다. 보통은 "검은 창(터미널)"에 명령어를 입력해서 켭니다.</p>
+<p><strong>원클릭 키트</strong>는 그 검은 창의 어려운 명령어를 <strong>번호 메뉴로 바꿔 주는 작은 도우미</strong>입니다. 파일 2개로 움직입니다.</p>
+<ul><li><code>Claude-Code_One-Click_Kit.bat</code> — 더블클릭하는 <strong>실행 파일</strong></li><li><code>menu.ps1</code> — 한국어 메뉴가 들어 있는 <strong>본체</strong></li></ul>
+<blockquote><p>두 파일은 반드시 <strong>같은 폴더</strong>에 있어야 합니다. 하나만 옮기면 실행되지 않습니다.</p></blockquote>
+<h3 id="처음-나오는-말-쉽게-풀이">처음 나오는 말 쉽게 풀이</h3>
+<div class="table-wrap"><table><thead><tr><th>말</th><th>쉬운 뜻</th></tr></thead><tbody><tr><td>터미널 (검은 창)</td><td>글자로 컴퓨터에 일을 시키는 창. 이 키트의 메뉴도 이 창에 나옵니다.</td></tr><tr><td>PowerShell</td><td>Windows에 원래 들어 있는 글자 명령 프로그램. 이 키트의 메뉴가 PowerShell 위에서 돌아갑니다. 따로 설치할 필요가 없습니다.</td></tr><tr><td>폴더</td><td>파일을 담는 칸(디렉터리). Claude Code는 "어느 폴더에서 켰는지"를 기준으로 일합니다.</td></tr><tr><td>로그인</td><td>내 계정임을 확인하는 절차. Claude Code는 처음 켤 때 인터넷 브라우저가 열려 로그인합니다.</td></tr><tr><td>요금제 (플랜)</td><td>Claude의 유료 이용권 종류. Pro, Max, Team, Enterprise 등이 있습니다.</td></tr><tr><td>설치 스크립트</td><td>프로그램을 내려받아 깔아 주는 작은 명령 묶음. 이 키트는 Anthropic 공식 주소의 것만 사용합니다.</td></tr><tr><td>훅 (hook)</td><td>다른 프로그램이 특정 일을 할 때 자동으로 같이 실행되는 작은 프로그램. 이 키트에서는 <strong>선택 기능</strong>(<a href="#10-폴더-자동-등록-기능-선택">10장</a>)에서만 씁니다.</td></tr><tr><td>Node.js</td><td>자바스크립트 프로그램을 실행하는 도구. 키트 본체에는 필요 없고, <strong>선택 기능(10장)에만</strong> 필요합니다.</td></tr></tbody></table></div>
+<h3 id="키트가-하는-일--하지-않는-일">키트가 하는 일 / 하지 않는 일</h3>
+<div class="table-wrap"><table><thead><tr><th>하는 일</th><th>하지 않는 일</th></tr></thead><tbody><tr><td>번호 메뉴를 보여 줍니다.</td><td>Claude Code를 <strong>포함하거나 재배포하지 않습니다.</strong> (실행할 때 공식 주소에서 내려받습니다.)</td></tr><tr><td>Claude Code 공식 설치 스크립트를 실행합니다.</td><td>계정·결제·API 키를 <strong>다루지 않습니다.</strong> 로그인은 Claude Code가 브라우저로 처리합니다.</td></tr><tr><td>Claude Code를 원하는 폴더에서 켭니다.</td><td>키트 스스로 <strong>자동 업데이트되지 않습니다.</strong> 새 키트는 직접 다시 받아야 합니다.</td></tr><tr><td>업데이트·진단·버전 확인 명령을 대신 실행합니다.</td><td>macOS·Linux를 지원하지 않습니다.</td></tr><tr><td>Claude Code를 지웁니다. (선택 시)</td><td>사용자의 정보를 <strong>수집하거나 외부로 보내는 코드가 없습니다.</strong> (설치 스크립트를 내려받는 요청 1건 제외, <a href="#13-보안과-데이터-흐름">13장</a> 참고)</td></tr></tbody></table></div>
+<h2 id="2-사전-준비물과-필요-프로그램">2. 사전 준비물과 필요 프로그램</h2>
+<h3 id="2-1-준비물-체크리스트">2-1. 준비물 체크리스트</h3>
+<ul><li>☐ Windows 10 (1809 이상) 또는 Windows 11 컴퓨터</li><li>☐ 인터넷 연결 (설치·로그인·사용에 모두 필요)</li><li>☐ 인터넷 브라우저 (로그인 화면을 여는 데 사용)</li><li>☐ <strong>Claude 유료 플랜 또는 계정</strong> (아래 표 참고)</li><li>☐ 이 키트 파일 (3장에서 받는 방법을 설명합니다)</li></ul>
+<h3 id="2-2-필요한-것과-필요-없는-것">2-2. 필요한 것과 필요 없는 것</h3>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 여부</th><th>설명</th></tr></thead><tbody><tr><td>Windows 10 1809 이상 / Windows 11</td><td><strong>필수</strong></td><td>Claude Code의 공식 요구사항입니다. 키트는 이 PC의 Windows 11에서 시험했고, Windows 10에서의 동작은 <strong>미확인</strong>입니다.</td></tr><tr><td>메모리(RAM) 4GB 이상, x64 또는 ARM64 프로세서</td><td><strong>필수</strong></td><td>Claude Code의 공식 요구사항입니다.</td></tr><tr><td>인터넷 연결</td><td><strong>필수</strong></td><td></td></tr><tr><td>Claude 계정 (Pro, Max, Team, Enterprise 또는 Console)</td><td><strong>필수</strong></td><td>무료 Claude.ai 플랜에는 Claude Code가 포함되지 않습니다.</td></tr><tr><td>Anthropic 지원 국가에 있을 것</td><td><strong>필수</strong></td><td>Anthropic 공식 요구사항입니다. 지원 국가 목록은 <a href="https://www.anthropic.com/supported-countries">anthropic.com/supported-countries</a>에서 확인하세요.</td></tr><tr><td>Windows PowerShell 5.1</td><td>필수 (기본 내장)</td><td>Windows 10·11에 들어 있어 <strong>따로 설치할 필요가 없습니다.</strong></td></tr><tr><td>Node.js</td><td><strong>필요 없음</strong></td><td>Claude Code와 키트 본체에는 필요하지 않습니다. (선택 기능 10장에만 필요)</td></tr><tr><td>Git for Windows</td><td>선택</td><td>있으면 Claude Code가 Bash 도구를 쓸 수 있습니다. 없으면 PowerShell을 대신 사용하며, 없어도 정상 작동합니다.</td></tr><tr><td>관리자 권한</td><td><strong>필요 없음</strong></td><td>Claude Code 설치에 관리자 권한이 필요하지 않다고 공식 문서에 적혀 있습니다.</td></tr></tbody></table></div>
+<blockquote><p>위 요구사항은 Anthropic 공식 설치 문서(<a href="https://code.claude.com/docs/en/setup">https://code.claude.com/docs/en/setup</a>)를 <strong>2026-09-20에 확인</strong>한 내용입니다. Anthropic이 바꿀 수 있으니 설치 전에 공식 문서도 한 번 확인하세요.</p></blockquote>
+<p><strong>검은 창이 부담스러우면?</strong> 마우스로 쓰는 <strong>Claude 데스크톱 앱</strong>도 있습니다. (<a href="https://claude.com/download">claude.com/download</a>) 이 경우 키트는 필요하지 않고, 같은 계정 조건이 적용됩니다.</p>
+<h2 id="3-다운로드-방법">3. 다운로드 방법</h2>
+<h3 id="3-1-키트-받기">3-1. 키트 받기</h3>
+<p>저장소 주소: <a href="https://github.com/sodam-ai/Claude-Code_One-Click_Kit">https://github.com/sodam-ai/Claude-Code_One-Click_Kit</a></p>
+<p><strong>방법 A. ZIP으로 받기 (가장 쉬움)</strong></p>
+<ol><li>위 주소를 브라우저로 엽니다.</li><li>초록색 <strong>Code</strong> 버튼 → <strong>Download ZIP</strong>을 누릅니다.</li><li>받은 ZIP 파일을 <strong>오른쪽 클릭 → "압축 풀기"</strong> 로 풉니다. (ZIP 안에서 바로 실행하면 <code>menu.ps1</code>을 못 찾아 실패합니다.)</li><li>압축을 푼 폴더 안에 <code>Claude-Code_One-Click_Kit.bat</code>과 <code>menu.ps1</code>이 <strong>함께</strong> 있는지 확인합니다.</li></ol>
+<p><strong>방법 B. git으로 받기 (Git을 아는 분)</strong></p>
+<pre><code>git clone https://github.com/sodam-ai/Claude-Code_One-Click_Kit.git</code></pre>
+<p><strong>폴더 위치 권장:</strong> 짧은 영문 경로(예: <code>C:\ClaudeKit</code>)를 권장합니다. 한글·공백이 든 경로도 따옴표로 감싸 처리하도록 만들어져 있지만 모든 경우를 시험하지는 않았으므로, 문제가 생기면 짧은 영문 경로로 옮겨 보세요.</p>
+<blockquote><p><strong>받은 파일이 이 문서와 다를 수 있습니다.</strong> 저장소의 릴리스 태그 <code>v1.0.0</code>은 2026-04-20의 <strong>초기 버전</strong>이며, 이 문서가 설명하는 폴더 고르기·정렬 등은 그 뒤에 추가된 기능입니다. 받은 뒤 [3] 시작하기를 눌렀을 때 <strong>"어느 폴더에서 시작할까요?"</strong> 화면이 나오면 이 문서와 같은 버전입니다. 나오지 않으면 더 오래된 버전입니다. (2026-09-20에 확인한 GitHub 상태: 공개 저장소, 기본 브랜치 <code>main</code>, 릴리스는 <code>v1.0.0</code> 하나뿐이며 <code>main</code>의 마지막 반영일은 2026-06-18이었습니다. <strong>이 문서가 설명하는 새 기능이 저장소에 올라가기 전에는 받은 파일에 폴더 고르기 화면이 없습니다.</strong>)</p></blockquote>
+<p><strong>Windows가 경고를 띄울 때</strong></p>
+<ul><li>처음 실행하면 <strong>"Windows의 PC 보호"</strong> 창이 뜰 수 있습니다. 인터넷에서 받은 실행 파일에는 흔히 나오는 경고입니다. <strong>추가 정보 → 실행</strong>을 누르세요. 출처가 불안하면 실행하지 마세요.</li><li>그래도 막히면: 파일(<code>.bat</code>, <code>menu.ps1</code>)을 오른쪽 클릭 → <strong>속성</strong> → 아래쪽 <strong>"차단 해제"</strong> 체크 → 확인.</li></ul>
+<h3 id="3-2-claude-code-받기-자동">3-2. Claude Code 받기 (자동)</h3>
+<ul><li>키트의 <strong>[1] 설치하기</strong>를 누르면 <strong>Anthropic 공식 주소</strong> <code>https://claude.ai/install.ps1</code>에서 설치 스크립트를 내려받아 바로 실행합니다. 사용자가 따로 받을 것은 없습니다.</li><li>키트 없이 직접 설치하려면 (Anthropic 공식 안내, PowerShell):</li></ul>
+<pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+<ul><li>다른 공식 방법으로 WinGet(<code>winget install Anthropic.ClaudeCode</code>)도 있습니다. 단, WinGet으로 설치한 것은 <strong>자동 업데이트되지 않고</strong>, 키트의 [8] 제거로 <strong>지워지지 않습니다.</strong> (WinGet으로 지우세요.)</li></ul>
+<h2 id="4-설치-방법">4. 설치 방법</h2>
+<h3 id="4-1-claude-code-설치-처음-한-번">4-1. Claude Code 설치 (처음 한 번)</h3>
+<ol><li><code>Claude-Code_One-Click_Kit.bat</code>을 <strong>더블클릭</strong>합니다. 검은 창에 한국어 메뉴가 나옵니다.</li><li><strong>↑↓ 화살표로 <code>1 설치하기</code>를 고르고 Enter</strong>를 누릅니다. (숫자 <code>1</code> 키를 눌러도 됩니다.)</li><li>화면에 필요한 것(유료 플랜, 인터넷)과 설치 주소가 나옵니다. 읽은 뒤 <strong>Enter</strong>를 누르면 설치가 시작됩니다. (취소하려면 창을 닫으세요.)</li><li><strong>1~2분</strong> 기다립니다. <code>설치 완료!</code>가 보이면 성공입니다.</li><li><code>설치는 됐지만 이 창에서 아직 인식이 안 돼요</code>가 보이면 <strong>창을 닫고 키트를 다시 실행</strong>하세요. (설치 직후 흔한 일이며 정상입니다.)</li></ol>
+<p>이미 설치되어 있으면 <code>이미 설치되어 있어요.</code>라고 알려 주고 <strong>다시 설치하지 않습니다.</strong></p>
+<h3 id="4-2-선택-폴더-자동-등록-기능-설치">4-2. (선택) 폴더 자동 등록 기능 설치</h3>
+<p>Claude에게 채팅으로 <code>cd 폴더경로</code>를 시켜 이동한 폴더가 <strong>[3] 시작하기 목록에 자동으로 뜨게</strong> 하고 싶을 때만 설치합니다. 자세한 설명은 <a href="#10-폴더-자동-등록-기능-선택">10장</a>입니다.</p>
+<ol><li><strong>Node.js</strong>를 설치합니다. (<a href="https://nodejs.org">https://nodejs.org</a>)</li><li>키트 폴더의 <code>tools\cd-hook</code> 폴더로 들어가 <code>install-cd-hook.cmd</code>를 <strong>더블클릭</strong>합니다.</li><li>마지막에 <code>[완료]</code>와 <code>자체 테스트: 통과</code>가 보이면 성공입니다.</li><li><strong>새 Claude Code 세션</strong>을 열어야 적용됩니다.</li></ol>
+<h2 id="5-빠른-시작-3단계">5. 빠른 시작 (3단계)</h2>
+<ol><li><code>Claude-Code_One-Click_Kit.bat</code>을 <strong>더블클릭</strong>합니다.</li><li><strong><code>1</code> 설치하기</strong>를 골라 Claude Code를 설치합니다. *(처음 한 번만)*</li><li><strong><code>3</code> 시작하기</strong>를 고릅니다. 맨 위 <strong><code>D 경로 직접 입력</code></strong> 에서 Enter를 눌러 폴더 경로를 붙여넣거나, 목록에서 폴더를 고른 뒤 Enter를 누릅니다. 처음에는 <strong>브라우저 로그인</strong>이 한 번 뜹니다. → 끝!</li></ol>
+<p>그 뒤로는 한국어로 시키면 됩니다. 예) <code>이 폴더에 있는 사진을 날짜별로 정리해줘</code></p>
+<h2 id="6-실행-방법">6. 실행 방법</h2>
+<p><strong>평소에 켜는 방법 (매번)</strong></p>
+<ol><li><code>Claude-Code_One-Click_Kit.bat</code>을 더블클릭합니다.</li><li>메뉴에서 <strong><code>3</code> 시작하기</strong>를 고릅니다.</li><li><strong>"어느 폴더에서 시작할까요?"</strong> 목록에서 원하는 폴더를 고르고 Enter를 누릅니다. (고르는 방법은 <a href="#7-3-폴더-고르기-화면-3번">7-3</a>)</li><li>그 폴더가 <strong>처음 여는 곳</strong>이면 안내가 뜹니다. 안내를 읽고 <a href="#7-4-이-폴더를-믿나요-창-처음-여는-폴더에서">7-4</a>대로 진행하세요.</li><li>Claude Code가 켜집니다. <strong>처음이면 브라우저가 열려 로그인</strong>합니다. 평소 쓰던 방식으로 로그인하면 됩니다.</li></ol>
+<p><strong>끝내는 방법:</strong> Claude 안에서 <code>/exit</code>(또는 <code>/quit</code>)를 입력합니다. 키트 메뉴로 돌아오면 <strong>Enter</strong>를 눌러 계속하고, 메뉴에서 <strong>Q</strong>(또는 Esc)로 키트를 닫습니다.</p>
+<p><strong>메뉴가 켜지지 않을 때:</strong> 검은 창에 <code>Could not start the menu</code>가 나오면 <code>.bat</code>과 <code>menu.ps1</code>이 <strong>같은 폴더</strong>에 있는지 확인하세요. 자세한 해결은 <a href="#14-문제오류-대처">14장</a>입니다.</p>
+<h2 id="7-사용-방법">7. 사용 방법</h2>
+<h3 id="7-1-메뉴-조작법">7-1. 메뉴 조작법</h3>
+<div class="table-wrap"><table><thead><tr><th>누르는 키</th><th>하는 일</th></tr></thead><tbody><tr><td><code>↑</code> <code>↓</code></td><td>항목을 고릅니다. (끝에서 넘기면 반대편으로 이어집니다.)</td></tr><tr><td><code>Enter</code></td><td>고른 항목을 실행합니다.</td></tr><tr><td>숫자 <code>1</code>~<code>8</code></td><td>그 번호를 <strong>바로</strong> 실행합니다.</td></tr><tr><td><code>Q</code> 또는 <code>Esc</code></td><td>키트를 닫습니다.</td></tr></tbody></table></div>
+<p>화면 맨 위에는 <code>상태  설치됨</code>(또는 <code>아직 설치 안 됨</code>)과 현재 Windows 사용자 이름이 표시됩니다.</p>
+<h3 id="7-2-메뉴-전체-설명">7-2. 메뉴 전체 설명</h3>
+<div class="table-wrap"><table><thead><tr><th class="a-center">번호</th><th>이름</th><th>하는 일</th></tr></thead><tbody><tr><td class="a-center"><strong>1</strong></td><td>설치하기</td><td>Claude Code를 설치합니다. 이미 있으면 건너뜁니다.</td></tr><tr><td class="a-center"><strong>2</strong></td><td>로그인·계정 안내</td><td>어떤 계정이 필요한지, 로그인은 어떻게 하는지 안내합니다. (읽기만 함)</td></tr><tr><td class="a-center"><strong>3</strong></td><td>시작하기</td><td>폴더를 고른 뒤 Claude Code를 켭니다.</td></tr><tr><td class="a-center"><strong>4</strong></td><td>도움말·명령어</td><td>Claude 안에서 쓰는 명령어를 보여 줍니다. (읽기만 함)</td></tr><tr><td class="a-center"><strong>5</strong></td><td>업데이트</td><td><code>claude update</code>를 실행합니다.</td></tr><tr><td class="a-center"><strong>6</strong></td><td>진단·문제 해결</td><td><code>claude doctor</code>로 설치 상태를 점검하고 자주 묻는 문제를 보여 줍니다.</td></tr><tr><td class="a-center"><strong>7</strong></td><td>버전 확인</td><td><code>claude --version</code>을 실행합니다.</td></tr><tr><td class="a-center"><strong>8</strong></td><td>제거</td><td>Claude Code를 지웁니다. (<a href="#12-제거-방법">12장</a> 참고)</td></tr><tr><td class="a-center"><strong>Q</strong></td><td>종료</td><td>키트를 닫습니다.</td></tr></tbody></table></div>
+<p>Claude Code가 설치되어 있지 않으면 3·5·6·7번은 <code>아직 설치가 안 돼 있어요</code>라고 알려 주고 <strong>1번을 먼저 하라고 안내</strong>합니다.</p>
+<h3 id="7-3-폴더-고르기-화면-3번">7-3. 폴더 고르기 화면 (3번)</h3>
+<p>Claude Code는 <strong>켠 폴더 안에서</strong> 일합니다. 그래서 켜기 전에 폴더를 고릅니다.</p>
+<pre><code>  ══════ 어느 폴더에서 시작할까요? ══════
+
+   ▶ [D ]  경로 직접 입력                          목록에 없는 폴더
+     [0 ]  홈 폴더                                지금까지 방식
+     [1 ]  (최근 작업한 폴더 이름)
+     [2 ]  (최근 작업한 폴더 이름)
+
+   고른 곳 :  (지금 고른 줄의 전체 경로)
+   ↑↓ 로 고르고 Enter.   숫자·D 키는 그 줄로 이동.   S: 정렬 전환.   취소는 Esc.   [정렬: 수정 최신순]</code></pre>
+<p>(화면 모양은 예시입니다. 실제 폴더 이름과 색은 다를 수 있습니다.)</p>
+<p><strong>처음 열면 커서는 맨 위 <code>D 경로 직접 입력</code> 줄에 있습니다.</strong> 새 프로젝트를 시작할 때는 그대로 <strong>Enter → 폴더 경로 붙여넣기</strong>만 하면 됩니다. 홈 폴더로 시작하려면 <code>↓</code>를 한 번 누르거나 <code>0</code> 키를 누른 뒤 Enter를 누르세요.</p>
+<blockquote><p><strong>왜 홈 폴더에서 켜고 <code>cd</code>로 옮기면 안 되나요?</strong> 이 키트를 만들며 확인한 바로는, Claude 안에서 <code>cd</code>로 작업 폴더를 옮겨도 <strong>다음 명령에서 원래 폴더로 되돌아갑니다.</strong> (Claude Code 버전에 따라 달라질 수 있습니다.) 그래서 <strong>처음부터 일할 폴더에서 켜야</strong> 하고, 새 프로젝트 폴더는 <code>D</code> 줄로 들어가는 것이 가장 확실합니다.</p></blockquote>
+<div class="table-wrap"><table><thead><tr><th>누르는 키</th><th>하는 일</th></tr></thead><tbody><tr><td><code>↑</code> <code>↓</code></td><td>줄을 고릅니다.</td></tr><tr><td><code>Enter</code></td><td>고른 폴더에서 Claude Code를 켭니다.</td></tr><tr><td>숫자, <code>D</code></td><td>그 번호의 줄로 <strong>이동만</strong> 합니다. (바로 실행하지 않으니 Enter로 확정하세요. 10번 이상은 두 자리 숫자라서 실수를 막기 위한 것입니다.)</td></tr><tr><td><code>Home</code> <code>End</code></td><td>맨 위 / 맨 아래로 이동합니다.</td></tr><tr><td><code>PageUp</code> <code>PageDown</code></td><td>한 화면씩 넘깁니다.</td></tr><tr><td><code>S</code></td><td><strong>정렬 방식을 바꿉니다</strong> (아래 표).</td></tr><tr><td><code>Esc</code></td><td>취소하고 메뉴로 돌아갑니다.</td></tr></tbody></table></div>
+<p><strong>목록에 뜨는 폴더는 어디서 가져오나요?</strong></p>
+<ul><li>이전에 Claude Code를 <strong>실제로 켰던 폴더</strong>(Claude Code가 기록해 둔 <code>.claude.json</code>의 프로젝트 목록)</li><li>(선택 기능을 설치했다면) 채팅에서 <code>cd</code>로 이동한 폴더 (<code>menu-extra-folders.txt</code>, <a href="#10-폴더-자동-등록-기능-선택">10장</a>)</li><li>목록에서 자동으로 <strong>빠지는 것</strong>: 내 사용자 폴더 자체, Windows 폴더, 이미 지워진 폴더, 중복.</li><li>줄이 화면보다 길면 <code>▲ 위에 더 있어요</code> / <code>▼ 아래에 더 있어요</code>가 나오며 <strong>스크롤</strong>됩니다. 개수 제한은 없습니다.</li><li>목록에 없는 폴더(새 프로젝트 포함)는 맨 위 <strong><code>D</code> 줄</strong>에서 Enter를 누르고 <strong>폴더 경로를 붙여넣으세요.</strong> (그냥 Enter를 누르면 취소됩니다. 없는 폴더면 <code>그런 폴더가 없어요</code>라고 알려 줍니다.)</li></ul>
+<p><strong><code>S</code> 키 정렬 방식 (누를 때마다 다음으로 순환)</strong></p>
+<div class="table-wrap"><table><thead><tr><th class="a-center">순서</th><th>이름</th><th>기준</th></tr></thead><tbody><tr><td class="a-center">1</td><td>수정 최신순 (기본)</td><td>폴더의 "수정한 날짜"가 최근인 것부터</td></tr><tr><td class="a-center">2</td><td>수정 오래된순</td><td>수정한 날짜가 오래된 것부터</td></tr><tr><td class="a-center">3</td><td>생성 최신순</td><td>폴더를 만든 날짜가 최근인 것부터</td></tr><tr><td class="a-center">4</td><td>생성 오래된순</td><td>만든 날짜가 오래된 것부터</td></tr><tr><td class="a-center">5</td><td>이름순</td><td>폴더 이름 가나다·ABC순</td></tr><tr><td class="a-center">6</td><td>이름역순</td><td>이름 반대순</td></tr></tbody></table></div>
+<ul><li>정렬을 바꿔도 <strong>지금 고른 폴더는 그대로 유지</strong>되고, <code>경로 직접 입력</code>은 항상 맨 위, 그 아래 <code>홈 폴더</code>는 항상 둘째 줄에 고정되어 있습니다. (정렬은 그 아래 폴더들에만 적용됩니다.)</li><li>정렬 방식은 <strong>저장되지 않습니다.</strong> 3번을 다시 열면 항상 "수정 최신순"으로 시작합니다.</li><li>"수정한 날짜"는 Windows가 폴더에 기록하는 값으로, 보통 폴더 <strong>바로 안에</strong> 파일이 생기거나 지워질 때 바뀝니다.</li></ul>
+<blockquote><p><strong>화살표가 안 먹는 특수한 환경</strong>(자동 실행 등 입력이 연결된 경우)에서는 자동으로 <strong>번호를 적는 방식</strong>으로 바뀝니다. 번호를 입력하고 Enter를 누르며, 그냥 Enter는 <code>0번 홈 폴더</code>입니다.</p></blockquote>
+<h3 id="7-4-이-폴더를-믿나요-창-처음-여는-폴더에서">7-4. "이 폴더를 믿나요?" 창 (처음 여는 폴더에서)</h3>
+<p>Claude Code는 처음 여는 폴더에서 <strong>"이 폴더를 믿나요?"</strong> 라고 한 번 묻습니다. 그런데 <strong>기본 선택이 <code>No, exit</code>(끝내기)</strong> 라서, 모르고 Enter만 누르면 그냥 꺼집니다. 그래서 키트가 미리 안내합니다.</p>
+<ol><li><code>[이 폴더는 Claude 로 처음 여는 곳이에요]</code> 안내가 나옵니다.</li><li>잠시 뒤 Claude의 질문 창이 뜨면 <strong>아래 화살표(↓)로 <code>Yes, I trust this folder</code>를 고르고 Enter</strong>를 누릅니다.</li><li>한 번 해 두면 그 폴더는 다음부터 묻지 않습니다.</li></ol>
+<blockquote><p>믿을 수 없는 출처에서 받은 폴더라면 <code>Yes</code>를 누르지 마세요. Claude가 그 폴더 안의 파일을 읽고 실행할 수 있게 됩니다.</p></blockquote>
+<h3 id="7-5-claude에게-시키는-방법">7-5. Claude에게 시키는 방법</h3>
+<p>로그인 후에는 명령어를 외울 필요 없이 <strong>말하듯이</strong> 시키면 됩니다.</p>
+<ul><li><code>이 폴더에 있는 사진들 날짜별로 정리해줘</code></li><li><code>간단한 메모장 프로그램 하나 만들어줘</code></li><li><code>이 파일이 무슨 내용인지 요약해줘</code></li></ul>
+<p>잘 쓰는 요령:</p>
+<ul><li><strong>구체적으로</strong> 말하세요. ("정리해줘"보다 "사진을 날짜별 폴더로 옮겨줘")</li><li><strong>한 번에 한 가지</strong>씩 시키세요.</li><li>파일을 지우거나 옮기는 일은 시키기 전에 <strong>중요한 파일을 복사해 두세요.</strong> AI도 실수할 수 있습니다.</li><li>Claude가 "이 작업을 해도 될까요?"라고 물으면 <strong>내용을 읽고</strong> 허용하세요.</li></ul>
+<h2 id="8-작동-방법">8. 작동 방법</h2>
+<p>키트가 내부에서 하는 일을 순서대로 적었습니다. 코드를 몰라도 읽을 수 있게 풀었습니다.</p>
+<ol><li><strong><code>.bat</code> 실행:</strong> <code>Claude-Code_One-Click_Kit.bat</code>이 <code>powershell -NoProfile -ExecutionPolicy Bypass -File menu.ps1</code>을 실행합니다. (한국어를 안전하게 표시하려고 메뉴는 PowerShell 쪽에 있고, <code>.bat</code>은 영어(ASCII)만 씁니다. <code>Bypass</code>는 <strong>이 창 한 번에만</strong> 적용되는 설정이며 Windows 설정을 바꾸지 않습니다.)</li><li><strong>PATH 보강:</strong> 설치 직후에도 <code>claude</code>를 찾을 수 있도록, 이 창에 한해 <code>%USERPROFILE%\.local\bin</code>과 <code>%APPDATA%\npm</code>을 검색 경로에 더합니다.</li><li><strong>메뉴 표시:</strong> 화살표·숫자 입력을 받아 선택한 기능을 실행합니다.</li><li><strong>[1] 설치:</strong> <code>claude</code>가 있는지 먼저 확인하고, 없으면 공식 설치 스크립트를 내려받아 실행합니다.</li><li><strong>[3] 시작:</strong><ol><li>고정 디스크 목록을 만듭니다. (예: <code>C:/</code>, <code>D:/</code>)</li><li>폴더 목록을 만들고 사용자가 폴더를 고릅니다.</li><li>그 폴더로 이동(<code>Set-Location</code>)합니다. 실패하면(폴더가 지워졌거나 이름이 바뀜) 멈추고 알려 줍니다.</li><li>그 폴더를 Claude가 이미 "믿는다"고 기록했는지 <strong>읽기만</strong> 해서 확인하고, 아니면 7-4 안내를 보여 줍니다.</li><li><code>claude --add-dir &lt;고정 디스크들&gt;</code>을 실행합니다. (디스크를 못 찾으면 그냥 <code>claude</code>)</li></ol></li><li><strong>[5][6][7]:</strong> 각각 <code>claude update</code>, <code>claude doctor</code>, <code>claude --version</code>을 그대로 실행합니다.</li><li><strong>[8] 제거:</strong> 12장을 보세요.</li></ol>
+<p>키트가 하는 일은 여기까지입니다. <strong>AI가 답하는 일 자체는 Claude Code(Anthropic)가 합니다.</strong></p>
+<h2 id="9-명령어-모음">9. 명령어 모음</h2>
+<h3 id="9-1-claude-안에서-쓰는-명령어-입력창에-입력">9-1. Claude 안에서 쓰는 명령어 (입력창에 입력)</h3>
+<div class="table-wrap"><table><thead><tr><th>명령</th><th>뜻</th></tr></thead><tbody><tr><td><code>/help</code></td><td>모든 명령 보기</td></tr><tr><td><code>/exit</code> 또는 <code>/quit</code></td><td>Claude Code 끝내기</td></tr><tr><td><code>/clear</code></td><td>대화를 새로 시작 (기억은 유지)</td></tr><tr><td><code>/login</code> · <code>/logout</code></td><td>로그인 / 로그아웃 (계정을 바꿀 때)</td></tr><tr><td><code>/status</code></td><td>지금 상태 보기</td></tr><tr><td><code>/usage</code></td><td>사용량·요금 확인</td></tr></tbody></table></div>
+<p>키트 [4] 도움말에 나오는 목록과 같습니다. Claude Code의 명령은 버전에 따라 달라질 수 있으니 정확한 목록은 <code>/help</code>로 확인하세요.</p>
+<h3 id="9-2-터미널에서-직접-쓰는-명령어-참고용">9-2. 터미널에서 직접 쓰는 명령어 (참고용)</h3>
+<div class="table-wrap"><table><thead><tr><th>명령</th><th>뜻</th><th>키트 메뉴</th></tr></thead><tbody><tr><td><code>claude</code></td><td>Claude Code 실행</td><td>3</td></tr><tr><td><code>claude --version</code></td><td>설치된 버전 확인</td><td>7</td></tr><tr><td><code>claude update</code></td><td>최신 버전으로 업데이트</td><td>5</td></tr><tr><td><code>claude doctor</code></td><td>설치·설정 점검 (읽기 전용)</td><td>6</td></tr></tbody></table></div>
+<p>키트 메뉴가 대신 실행해 주므로 초보자는 직접 입력할 필요가 없습니다.</p>
+<h3 id="9-3-선택-기능-도구-명령어-toolscd-hook-폴더-nodejs-필요">9-3. 선택 기능 도구 명령어 (<code>tools\cd-hook</code> 폴더, Node.js 필요)</h3>
+<div class="table-wrap"><table><thead><tr><th>명령</th><th>뜻</th></tr></thead><tbody><tr><td><code>install-cd-hook.cmd</code> 더블클릭</td><td>폴더 자동 등록 기능 설치</td></tr><tr><td><code>node install-cd-hook.cjs --dry-run</code></td><td>설치하지 않고 <strong>무엇을 할지만</strong> 보여 줌 (아무것도 쓰지 않음)</td></tr><tr><td><code>node check-cd-hook.cjs</code></td><td>설치 상태 점검 (읽기 전용)</td></tr></tbody></table></div>
+<blockquote><p>설치기는 <code>--dry-run</code> 말고 <strong>모르는 옵션(예: <code>--dryrun</code> 오타)을 주면 아무것도 하지 않고 멈춥니다.</strong> (오타가 실제 설치로 이어지지 않게 하기 위함)</p></blockquote>
+<h2 id="10-폴더-자동-등록-기능-선택">10. 폴더 자동 등록 기능 (선택)</h2>
+<h3 id="10-1-왜-필요한가요">10-1. 왜 필요한가요?</h3>
+<p>3번 목록은 "Claude Code를 <strong>실제로 켰던</strong> 폴더"를 보여 줍니다. 그런데 이미 켜진 Claude와 채팅하다 <code>cd 폴더경로</code>로 이동해 작업한 폴더는 그 기록에 남지 않아서 목록에 안 뜹니다. 이 선택 기능은 그런 폴더를 목록에 <strong>자동으로 더해 줍니다.</strong></p>
+<h3 id="10-2-어떻게-동작하나요">10-2. 어떻게 동작하나요?</h3>
+<ul><li>Claude Code의 <strong>훅(hook)</strong> 기능으로 Bash·PowerShell 명령이 실행되기 직전에 작은 프로그램(<code>cd-folder-register.cjs</code>)이 함께 돌아갑니다.</li><li>그 프로그램은 명령 글자에서 <code>cd</code>·<code>Set-Location</code>(<code>sl</code>) 뒤의 <strong>드라이브 문자가 있는 폴더 경로</strong>를 찾아, 실제로 있는 폴더면 <code>%APPDATA%\claude-code\menu-extra-folders.txt</code>에 한 줄 더합니다. (이미 있으면 더하지 않음)</li><li><strong>명령 실행을 막거나 바꾸지 않습니다.</strong> 어떤 오류가 나도 조용히 통과시킵니다.</li><li>명령마다 약 <strong>0.1초</strong>가 더 걸립니다. (작성자 PC 측정 평균 약 95ms)</li></ul>
+<h3 id="10-3-등록되지-않는-경로-의도된-제외">10-3. 등록되지 않는 경로 (의도된 제외)</h3>
+<ul><li>내 사용자 폴더, Windows 폴더, <code>node_modules</code> 안, Claude 설정 폴더, <code>Temp\claude</code> 임시 폴더</li><li>없는 폴더, 파일, 드라이브 문자가 없는 상대경로 (<code>cd ..</code> 등)</li><li><code>echo</code>, <code>printf</code>, <code>Write-Host</code>, <code>Write-Output</code>, <code>cat</code>, <code>type</code>으로 <strong>시작하는</strong> 명령 (글자를 출력할 뿐 이동이 아니므로)</li></ul>
+<h3 id="10-4-설치기가-하는-일-안전장치">10-4. 설치기가 하는 일 (안전장치)</h3>
+<ul><li>훅 파일을 Claude 설정 폴더(<code>CLAUDE_CONFIG_DIR</code> 환경변수, 없으면 <code>%USERPROFILE%\.claude</code>)의 <code>hooks</code>에 복사합니다.</li><li>같은 설정 폴더의 <code>settings.json</code>에 훅 2개(Bash, PowerShell)를 <strong>덧붙이기만</strong> 합니다. 기존 설정은 그대로입니다.</li><li>수정 <strong>전에 백업</strong>(<code>settings.json.bak-cd-hook-날짜시간</code>)을 만들고, 수정 <strong>후에 다시 읽어 검증</strong>하며, 이상이 있으면 <strong>자동으로 원래대로 복구</strong>합니다.</li><li>여러 번 실행해도 결과가 같습니다. (이미 등록돼 있으면 "이미 등록"이라고만 알림)</li><li><code>settings.json</code>이 깨졌거나 형식이 예상과 다르면 <strong>손대지 않고 멈춥니다.</strong></li><li>마지막에 임시 폴더로 자체 테스트를 합니다. (실제 등록 파일은 건드리지 않음)</li><li><code>.claude.json</code>은 <strong>절대 수정하지 않습니다.</strong></li></ul>
+<p><strong>되돌리기:</strong> <code>settings.json.bak-cd-hook-날짜시간</code> 파일을 <code>settings.json</code>으로 덮어쓰면 설치 전 상태로 돌아갑니다.</p>
+<h3 id="10-5-한계-알아-두세요">10-5. 한계 (알아 두세요)</h3>
+<ul><li>이 기능은 <strong>이 PC의 Claude 설정에만</strong> 적용됩니다. 다른 PC에서는 그 PC에서 다시 설치해야 합니다.</li><li>Claude Code가 훅 기능을 바꾸면 동작하지 않을 수 있습니다. 목록에 안 뜨면 <a href="#14-문제오류-대처">14장</a>을 보세요.</li><li>훅은 <strong>모든 프로젝트의 모든 Bash·PowerShell 명령</strong>에서 실행됩니다. (명령 글자만 읽고 저장하지는 않습니다.)</li></ul>
+<h2 id="11-워크플로우">11. 워크플로우</h2>
+<p><strong>처음 쓰는 사람</strong></p>
+<pre><code>[ 키트 폴더에서 Claude-Code_One-Click_Kit.bat 더블클릭 ]
+                       │
+                       ▼
+              [ 한국어 메뉴가 뜸 ]
+                       │
+        ┌──────────────┴───────────────┐
+        ▼                              ▼
+  [1] 설치하기 ──(선택)──▶ [2] 로그인·계정 안내 읽기
+        │
+        ▼
+  [3] 시작하기 ─▶ 폴더 고르기 ─▶ (처음 여는 폴더면) 신뢰 안내
+        │
+        ▼
+  Claude Code 켜짐 ─▶ (처음이면) 브라우저 로그인 ─▶ 한국어로 시키기
+        │
+        ▼
+  /exit 입력 ─▶ 메뉴로 돌아옴 ─▶ Q 로 종료</code></pre>
+<p><strong>평소에 쓰는 사람</strong></p>
+<pre><code>.bat 더블클릭 ─▶ [3] 시작하기 ─▶ 폴더 고르기 ─▶ Claude 사용 ─▶ /exit ─▶ Q</code></pre>
+<p><strong>가끔 하는 관리</strong></p>
+<pre><code>[5] 업데이트  /  [6] 진단  /  [7] 버전 확인  /  [8] 제거</code></pre>
+<h2 id="12-제거-방법">12. 제거 방법</h2>
+<h3 id="12-1-키트에서-지우기-메뉴-8번">12-1. 키트에서 지우기 (메뉴 8번)</h3>
+<ol><li>메뉴에서 <strong><code>8</code> 제거</strong>를 고릅니다.</li><li>세 가지 중에서 고릅니다.<ul><li><strong>[1] 프로그램만 지우기</strong> — 설정·로그인·대화 기록은 <strong>남깁니다.</strong> (나중에 다시 설치해 이어 쓸 수 있음)</li><li><strong>[2] 전부 지우기</strong> — 프로그램을 지운 <strong>뒤</strong> 설정·로그인·대화 기록까지 지웁니다. <strong>되돌릴 수 없습니다.</strong></li><li><strong>[3] 취소</strong></li><li>그 밖의 입력(예: <code>9</code>, <code>n</code>)은 <strong>아무것도 지우지 않고</strong> <code>그 번호는 없어요</code>라고 알린 뒤 돌아갑니다.</li></ul></li><li><strong>[2]를 골라도 프로그램은 먼저 바로 지워집니다.</strong> 그다음에 <code>[경고] 설정·로그인·대화기록을 모두 삭제합니다. 정말 진행할까요?</code>라고 <strong>Y/N</strong>으로 물으며, 이 질문은 <strong>설정 삭제에만</strong> 해당합니다. <code>N</code>이면 설정과 기록은 남지만 프로그램은 이미 지워진 뒤입니다.</li></ol>
+<p><strong>지워지는 위치</strong></p>
+<div class="table-wrap"><table><thead><tr><th>무엇</th><th>위치</th><th class="a-center">[1]</th><th class="a-center">[2]</th></tr></thead><tbody><tr><td>프로그램</td><td><code>%USERPROFILE%\.local\bin\claude.exe</code></td><td class="a-center">지움</td><td class="a-center">지움</td></tr><tr><td>프로그램 파일들</td><td><code>%USERPROFILE%\.local\share\claude</code></td><td class="a-center">지움</td><td class="a-center">지움</td></tr><tr><td>npm 전역 패키지</td><td><code>npm uninstall -g @anthropic-ai/claude-code</code>를 실행합니다. (화면에는 아무것도 보이지 않도록 출력을 숨깁니다.)</td><td class="a-center">지움</td><td class="a-center">지움</td></tr><tr><td>설정·로그인·대화 기록</td><td><code>%USERPROFILE%\.claude</code> 폴더, <code>%USERPROFILE%\.claude.json</code> 파일</td><td class="a-center">남김</td><td class="a-center">Y면 지움</td></tr></tbody></table></div>
+<p><strong>키트가 지우지 않는 것</strong></p>
+<ul><li>WinGet 등 다른 방법으로 설치한 Claude Code (그 방법으로 지우세요)</li><li>VS Code 확장, JetBrains 플러그인, 데스크톱 앱 (각각 따로 지우세요. 이들도 <code>%USERPROFILE%\.claude</code>를 쓰므로 남아 있으면 폴더가 다시 생길 수 있습니다.)</li><li>Claude 설정 폴더를 다른 곳으로 옮겨 쓰는 경우의 그 폴더 (<code>%APPDATA%\claude-code</code> 등)</li><li><strong>키트 파일 자체</strong>, <code>menu-extra-folders.txt</code>, 선택 기능의 훅과 <code>settings.json</code>의 훅 항목</li></ul>
+<h3 id="12-2-선택-기능폴더-자동-등록-지우기">12-2. 선택 기능(폴더 자동 등록) 지우기</h3>
+<ol><li><code>settings.json</code>에서 <code>cd-folder-register.cjs</code>가 들어 있는 항목 2개(Bash, PowerShell)를 지우거나, 설치 전 백업 파일(<code>settings.json.bak-cd-hook-날짜시간</code>)로 덮어씁니다.</li><li>원하면 <code>hooks\cd-folder-register.cjs</code>와 <code>%APPDATA%\claude-code\menu-extra-folders.txt</code>, <code>cd-hook-errors.log</code>도 지웁니다.</li></ol>
+<h2 id="13-보안과-데이터-흐름">13. 보안과 데이터 흐름</h2>
+<p>이 장은 "무엇이 실행되고, 무엇을 읽고, 무엇이 밖으로 나가는지"를 솔직하게 적었습니다. <strong>키트 코드(<code>Claude-Code_One-Click_Kit.bat</code>, <code>menu.ps1</code>, <code>tools\cd-hook</code>)를 직접 읽어 확인한 내용</strong>입니다.</p>
+<h3 id="13-1-데이터-흐름-한눈에-보기">13-1. 데이터 흐름 한눈에 보기</h3>
+<pre><code> [ 내 컴퓨터 ]                                         [ 인터넷 ]
+ 키트(.bat, menu.ps1) ──(설치할 때만 1회)────────────▶ claude.ai/install.ps1  (설치 스크립트 내려받기)
+        │
+        └─ claude 실행 ───────────────────────────▶ Anthropic 서비스  (Claude Code가 직접 통신)
+                 ▲
+   (키트는 이 통신에 관여하지 않음)</code></pre>
+<ul><li><strong>키트가 직접 인터넷에 접속하는 곳은 딱 하나</strong>입니다. [1] 설치하기에서 <code>https://claude.ai/install.ps1</code>을 내려받는 것입니다.</li><li>키트 코드에는 사용자의 파일·대화·계정 정보를 <strong>모으거나 외부로 보내는 부분이 없습니다.</strong></li><li>Claude Code를 켠 뒤의 통신(대화 내용 전송 등)은 <strong>Claude Code 본체(Anthropic)</strong> 가 합니다. 무엇이 어떻게 처리되는지는 이 문서가 보증하지 않으며 Anthropic의 약관·개인정보 안내를 따릅니다.</li></ul>
+<h3 id="13-2-키트가-읽는-것--쓰는-것">13-2. 키트가 읽는 것 / 쓰는 것</h3>
+<div class="table-wrap"><table><thead><tr><th>대상</th><th>키트가 하는 일</th><th>왜</th></tr></thead><tbody><tr><td><code>%APPDATA%\claude-code\.claude.json</code>, <code>%USERPROFILE%\.claude.json</code></td><td><strong>읽기만</strong></td><td>예전에 작업한 폴더 목록과 "이 폴더를 믿는다" 기록을 보려고. 내용을 저장·전송하지 않고, <strong>수정하지 않습니다.</strong> (이 파일에는 계정 관련 정보가 들어 있을 수 있어 신중히 다룹니다.)</td></tr><tr><td><code>%APPDATA%\claude-code\menu-extra-folders.txt</code></td><td>읽기 (선택 기능의 훅이 씀)</td><td><code>cd</code>로 이동한 폴더를 목록에 더하려고</td></tr><tr><td>고정 디스크 목록</td><td>읽기</td><td>3번에서 <code>--add-dir</code>로 넘기려고</td></tr><tr><td>제거(8번) 때 위 12장의 파일·폴더</td><td><strong>삭제</strong></td><td>사용자가 명시적으로 고른 경우에만</td></tr><tr><td>그 밖의 사용자 파일</td><td>건드리지 않음</td><td></td></tr></tbody></table></div>
+<h3 id="13-3-꼭-알아야-할-위험과-대처">13-3. 꼭 알아야 할 위험과 대처</h3>
+<div class="table-wrap"><table><thead><tr><th>무엇</th><th>왜 위험할 수 있나</th><th>대처</th></tr></thead><tbody><tr><td><strong>인터넷에서 받은 스크립트를 바로 실행</strong> ([1] 설치, <code>irm ... | iex</code> 방식)</td><td>내려받은 내용을 확인 없이 실행하는 방식이라, 주소가 가짜이거나 해킹되면 위험합니다.</td><td>키트는 <strong>Anthropic 공식 주소 하나만</strong> 씁니다. 그래도 불안하면 공식 문서(<a href="https://code.claude.com/docs/en/setup">https://code.claude.com/docs/en/setup</a>)에서 직접 설치하세요. 공식 문서는 설치 파일의 서명 확인 방법도 안내합니다.</td></tr><tr><td><strong>모든 고정 디스크를 <code>--add-dir</code>로 허용</strong> ([3] 시작)</td><td>Claude가 C:, D: 등 <strong>모든 고정 디스크의 파일을 다룰 수 있는 범위</strong>에 놓입니다. 실제로 파일을 바꾸기 전에 물어보는지는 Claude Code의 권한 설정에 따르며, 이 문서는 그 세부를 보증하지 않습니다.</td><td>중요한 자료가 있는 PC라면 신중히 쓰세요. 이 동작이 부담되면 키트 [3] 대신 <strong>원하는 폴더에서 <code>claude</code>를 직접 실행</strong>하세요. AI가 요청한 작업 허용 여부는 <strong>내용을 읽고</strong> 결정하세요.</td></tr><tr><td><strong>폴더를 믿는다(Yes, I trust)</strong></td><td>그 폴더의 파일을 Claude가 읽고 실행할 수 있게 됩니다.</td><td>출처를 아는 폴더에서만 <code>Yes</code>를 고르세요.</td></tr><tr><td><strong>제거 8번</strong></td><td>파일을 실제로 지웁니다.</td><td>12장을 읽고 신중히 고르세요.</td></tr><tr><td><strong>선택 기능(훅)</strong></td><td>모든 Bash·PowerShell 명령 글자를 읽습니다. <code>settings.json</code>을 수정합니다.</td><td>명령 글자를 저장하지 않으며 명령을 막지 않습니다. 설치 전 백업이 자동으로 만들어집니다. 원치 않으면 설치하지 마세요.</td></tr></tbody></table></div>
+<h3 id="13-4-기록로그과-민감정보">13-4. 기록(로그)과 민감정보</h3>
+<ul><li>훅이 오류로 실패하면 <code>%APPDATA%\claude-code\cd-hook-errors.log</code>에 <strong>시각과 오류 종류만</strong> 한 줄 남깁니다. 명령 내용은 남기지 않으며, 파일이 50KB를 넘으면 더 쓰지 않습니다.</li><li><code>menu-extra-folders.txt</code>에는 <strong>내 폴더 경로</strong>가 들어 있습니다. 오류를 신고하거나 화면을 공유할 때 <strong>경로(사용자 이름 포함)를 가리세요.</strong></li><li>키트와 문서에는 API 키·비밀번호·토큰을 <strong>저장하지 않습니다.</strong> 저장소를 올리기 전에 이런 값이 없는지 확인했습니다. (작성 시점 검사 기준)</li><li>오류를 신고할 때 <strong>계정 정보, <code>.claude.json</code> 내용, 비밀번호를 붙여 넣지 마세요.</strong></li></ul>
+<h2 id="14-문제오류-대처">14. 문제·오류 대처</h2>
+<p>먼저 메뉴 <strong><code>6</code> 진단·문제 해결</strong>을 눌러 보세요. <code>claude doctor</code>가 원인을 알려 줍니다.</p>
+<h3 id="14-1-키트-실행설치-문제">14-1. 키트 실행·설치 문제</h3>
+<div class="table-wrap"><table><thead><tr><th>증상</th><th>원인과 해결</th></tr></thead><tbody><tr><td><code>Could not start the menu</code></td><td><code>.bat</code>과 <code>menu.ps1</code>이 <strong>같은 폴더</strong>에 있는지 확인하세요. ZIP을 풀지 않고 실행하면 이렇게 됩니다. 압축을 풀고 다시 실행하세요.</td></tr><tr><td>"Windows의 PC 보호" 창</td><td>추가 정보 → 실행. 또는 파일 오른쪽 클릭 → 속성 → <strong>차단 해제</strong>.</td></tr><tr><td>메뉴는 뜨는데 <code>claude 를 못 찾음</code></td><td>설치 직후 흔합니다. <strong>창을 닫고 키트를 다시 실행</strong>하세요.</td></tr><tr><td><code>[설치 실패] 인터넷 또는 보안 프로그램</code></td><td>인터넷을 확인하고, 백신·보안 프로그램이 막고 있는지 확인한 뒤 다시 시도하세요.</td></tr><tr><td>글자가 네모로 깨짐</td><td>창 위쪽 오른쪽 클릭 → 속성 → 글꼴을 <strong>맑은 고딕</strong> 또는 <strong>D2Coding</strong>으로. Windows Terminal을 쓰는 것도 방법입니다.</td></tr><tr><td>로그인이 안 됨</td><td>유료 플랜/계정이 맞는지, 인터넷이 되는지 확인하세요. 계정을 바꾸려면 Claude 안에서 <code>/logout</code> 후 <code>/login</code>.</td></tr><tr><td><code>이 폴더는 Claude 로 처음 여는 곳이에요</code> 뒤 바로 꺼짐</td><td>"믿나요?" 창에서 <code>No, exit</code>가 기본이라 Enter만 누르면 꺼집니다. <strong>↓로 <code>Yes</code>를 고르고</strong> Enter하세요.</td></tr><tr><td>그래도 안 됨</td><td>메뉴 <strong>1 설치하기</strong>로 다시 설치해 보세요.</td></tr></tbody></table></div>
+<h3 id="14-2-폴더-목록-문제">14-2. 폴더 목록 문제</h3>
+<div class="table-wrap"><table><thead><tr><th>증상</th><th>원인과 해결</th></tr></thead><tbody><tr><td><code>최근 작업한 기록을 못 찾았어요</code></td><td>아직 Claude Code를 켠 폴더가 없다는 뜻입니다. <code>D</code> 줄로 경로를 직접 붙여넣으세요.</td></tr><tr><td>내가 쓰던 폴더가 목록에 없음</td><td>Claude Code를 <strong>그 폴더에서 켠 적이 없으면</strong> 기록이 없습니다. <code>D</code>로 직접 입력하거나, 10장의 선택 기능을 설치하세요.</td></tr><tr><td><code>cd</code>로 이동했는데 목록에 안 뜸</td><td>선택 기능이 설치되어 있는지, <strong>새 세션</strong>에서 시도했는지 확인하세요. 아래 14-3의 점검 명령을 실행해 보세요.</td></tr><tr><td><code>S</code>를 눌러도 정렬이 안 바뀜</td><td>화살표·<code>S</code>는 입력이 연결된 창에서는 동작하지 않고 번호 입력 방식으로 바뀝니다. 일반 창(PowerShell·Windows Terminal)에서 실행했는지 확인하세요.</td></tr><tr><td><code>그런 폴더가 없어요</code></td><td>경로 오타이거나 폴더가 지워졌습니다. 경로를 다시 확인하세요.</td></tr><tr><td><code>그 폴더로 들어갈 수 없어요</code></td><td>목록을 만든 뒤 폴더가 지워졌거나 이름이 바뀐 경우입니다. 메뉴에서 다시 고르세요.</td></tr></tbody></table></div>
+<h3 id="14-3-선택-기능훅-점검">14-3. 선택 기능(훅) 점검</h3>
+<p><code>tools\cd-hook</code> 폴더에서 아래 명령을 실행합니다. <strong>읽기만 하고 아무것도 바꾸지 않습니다.</strong></p>
+<pre><code>node check-cd-hook.cjs</code></pre>
+<ul><li><code>[문제]</code> 줄이 있으면 그 문장대로 하세요. (<code>install-cd-hook.cmd</code>를 다시 실행하라는 안내가 많습니다.)</li><li>마지막의 <code>결과: 문제 없음</code>이 정상입니다. <code>[주의]</code>는 참고용입니다.</li><li><code>%APPDATA%\claude-code\cd-hook-errors.log</code>가 있으면 훅이 오류로 실패한 적이 있다는 뜻입니다. 그 안에는 오류 종류만 적혀 있습니다.</li><li>설치기가 <code>[중단]</code>을 보여 주면 이유가 적혀 있으며, 그때는 <strong>아무것도 바꾸지 않았거나 원래대로 복구한 상태</strong>입니다.</li><li><code>Node.js is required</code>가 나오면 Node.js를 설치하고 다시 실행하세요.</li></ul>
+<h2 id="15-자주-묻는-질문-faq">15. 자주 묻는 질문 (FAQ)</h2>
+<details><summary>Q. 이 키트는 무료인가요? Claude Code도 무료인가요?</summary><p>키트는 Apache License 2.0으로 <strong>무료로</strong> 쓸 수 있습니다. 하지만 <strong>Claude Code는 무료가 아닙니다.</strong> Pro·Max·Team·Enterprise·Console 계정 중 하나가 필요하고 무료 Claude.ai 플랜은 포함되지 않습니다. 요금은 Anthropic이 정합니다.</p></details>
+<details><summary>Q. 이 키트는 Anthropic이 만든 건가요? 안전한가요?</summary><p>아닙니다. <strong>비공식</strong> 도우미이며 Anthropic과 무관합니다. 키트 코드는 공개되어 있어 누구나 읽어 볼 수 있고, 13장에 무엇을 하는지 적었습니다. "안전하다"고 보증하지는 않습니다. 사용은 사용자 책임입니다.</p></details>
+<details><summary>Q. Mac이나 휴대폰에서도 되나요?</summary><p>키트는 <strong>Windows 전용</strong>입니다. Claude Code 자체는 다른 운영체제도 지원하지만(공식 문서 참고) 이 키트는 쓸 수 없습니다.</p></details>
+<details><summary>Q. Node.js나 Git을 꼭 설치해야 하나요?</summary><p>아니요. 키트 본체와 Claude Code 설치에는 필요 없습니다. Node.js는 <strong>선택 기능(10장)에만</strong> 필요하고, Git은 있으면 Claude Code가 더 잘 동작하는 <strong>선택 사항</strong>입니다.</p></details>
+<details><summary>Q. 3번을 누르면 왜 폴더를 고르라고 하나요?</summary><p>Claude Code는 <strong>켠 폴더 안에서</strong> 일하기 때문에, 처음부터 원하는 폴더에서 켜는 것이 가장 확실합니다. 폴더를 신경 쓰고 싶지 않으면 둘째 줄 <code>0 홈 폴더</code>를 고르면 됩니다. (맨 위 첫 줄은 <code>D 경로 직접 입력</code>입니다.)</p></details>
+<details><summary>Q. 왜 모든 디스크를 Claude에게 넘기나요? 끄고 싶어요.</summary><p>Claude가 다른 드라이브의 파일도 다룰 수 있게 하려는 편의 기능입니다. 다만 <strong>접근 범위가 넓어지는 만큼 신중해야 합니다</strong>(13장). 끄는 스위치는 없습니다. 원하지 않으면 키트 [3] 대신 원하는 폴더에서 <code>claude</code>를 직접 실행하세요.</p></details>
+<details><summary>Q. 처음 여는 폴더에서 Claude가 그냥 꺼져 버려요.</summary><p>"이 폴더를 믿나요?" 창의 기본 선택이 <code>No, exit</code>이기 때문입니다. <strong>↓로 <code>Yes, I trust this folder</code>를 고르고 Enter</strong>를 누르세요. (7-4 참고)</p></details>
+<details><summary>Q. 내 대화 내용이 키트를 통해 어딘가로 전송되나요?</summary><p>키트 코드에는 대화·파일·계정 정보를 보내는 부분이 없습니다. 다만 <strong>Claude Code는 Anthropic 서비스와 통신</strong>하며, 그 처리는 Anthropic의 약관·개인정보 안내를 따릅니다. 회사 PC나 민감한 자료라면 소속 기관의 정책과 Anthropic 약관을 먼저 확인하세요.</p></details>
+<details><summary>Q. 회사에서 업무용(상업적)으로 써도 되나요?</summary><p>키트 자체는 Apache-2.0에 따라 상업적으로도 쓸 수 있습니다. 하지만 <strong>Claude Code의 업무·상업적 사용은 계정 종류에 따른 Anthropic 약관이 정합니다.</strong> 이 문서는 그 가능 여부를 판단하지 않습니다. 18장의 링크에서 본인 계정의 약관을 직접 확인하세요.</p></details>
+<details><summary>Q. 키트를 새 버전으로 바꾸려면?</summary><p>키트는 자동 업데이트되지 않습니다. 새 버전을 다시 받아 <strong>기존 폴더에 덮어쓰거나</strong> 새 폴더에 풀어 쓰세요. Claude Code 본체는 메뉴 <strong>5 업데이트</strong>로 바꿉니다(네이티브 설치본은 평소에도 백그라운드에서 자동 업데이트됩니다).</p></details>
+<details><summary>Q. 폴더 자동 등록(선택 기능)을 안 깔아도 되나요?</summary><p>네. 안 깔아도 키트의 모든 기본 기능이 정상 동작합니다. 채팅에서 <code>cd</code>로 이동한 폴더를 목록에 자동으로 넣고 싶을 때만 설치하세요.</p></details>
+<details><summary>Q. 선택 기능이 내 명령을 막거나 바꾸나요?</summary><p>아니요. 명령 글자를 <strong>읽기만</strong> 하고, 어떤 오류가 나도 명령은 그대로 실행됩니다. 명령마다 약 0.1초가 더 걸립니다.</p></details>
+<details><summary>Q. 여러 창에서 동시에 써도 되나요?</summary><p>키트 창을 여러 개 열어도 각각 독립적으로 동작합니다. 선택 기능의 등록 파일은 여러 세션이 함께 씁니다.</p></details>
+<details><summary>Q. 정렬 방식을 기억해 주나요?</summary><p>아니요. 3번을 열 때마다 "수정 최신순"으로 시작하고, <code>S</code>로 그때그때 바꿉니다.</p></details>
+<details><summary>Q. 문제가 생겼는데 어디에 알리나요?</summary><p>저장소(<a href="https://github.com/sodam-ai/Claude-Code_One-Click_Kit">https://github.com/sodam-ai/Claude-Code_One-Click_Kit</a>)의 Issues 페이지를 이용하세요. (2026-09-20에 Issues가 켜져 있는 것을 확인했습니다.) 알릴 때는 <strong>어느 메뉴에서, 화면에 뭐라고 나왔는지</strong>를 적고, 비밀번호·계정 정보·<code>.claude.json</code> 내용은 붙여 넣지 마세요. 사용자 이름이 든 경로도 가려 주세요.</p></details>
+<h2 id="16-업데이트-내용-요약">16. 업데이트 내용 요약</h2>
+<p>아래 항목을 눌러 펼쳐 보세요. 버전 번호는 저장소의 태그·커밋 기록 기준이며, 아직 릴리스되지 않은 내용은 그렇게 표시했습니다.</p>
+<details><summary>다음 버전 준비 중 (아직 릴리스 아님) · 2026-09 기준 작업본</summary><p><strong>3번 시작하기 개선</strong></p>
+<ul><li>폴더 고르기 화면이 <strong>화살표(↑↓)·번호·<code>D</code> 직접 입력</strong>으로 동작합니다. (예전에는 폴더를 묻지 않고 홈 폴더에서만 켰습니다.)</li><li><strong><code>D 경로 직접 입력</code> 줄을 목록 맨 위로</strong> 옮겼습니다. 새 프로젝트를 시작할 때 바로 경로를 붙여넣을 수 있고, 처음 열면 커서가 그 줄에 있습니다. (홈 폴더는 둘째 줄)</li><li>목록이 화면보다 길면 <strong>스크롤</strong>됩니다. 개수 제한 없이 전부 보여 줍니다. (<code>Home</code>·<code>End</code>·<code>PageUp</code>·<code>PageDown</code> 지원)</li><li><strong><code>S</code> 키 정렬 6종</strong> (수정 최신·오래된순, 생성 최신·오래된순, 이름순·이름역순). 정렬을 바꿔도 고른 폴더가 유지됩니다.</li><li>"이 폴더를 믿나요?" 창이 처음 여는 폴더에서 뜬다는 <strong>사전 안내</strong>를 추가했습니다. (기본 선택이 <code>No, exit</code>라서 꺼지는 사고 방지)</li><li>목록의 폴더가 지워졌을 때 엉뚱한 곳에서 켜지지 않고 <strong>멈추고 알려 줍니다.</strong></li><li>Claude 설정 파일(<code>.claude.json</code>)에 <strong>중복 키가 있어 읽기 실패</strong>하는 환경에서도 폴더 목록을 읽도록 보강했습니다.</li><li>목록에 내 사용자 폴더·Windows 폴더·없는 폴더·중복이 뜨지 않게 걸러 냅니다.</li></ul>
+<p><strong>폴더 자동 등록 (선택 기능, <code>tools\cd-hook</code>)</strong></p>
+<ul><li>채팅에서 <code>cd</code>로 이동한 폴더를 목록에 자동으로 더하는 <strong>훅</strong>을 추가했습니다.</li><li>안전한 <strong>설치기</strong>(백업·검증·자동 복구·<code>--dry-run</code>), <strong>상태 점검 도구</strong>, 더블클릭용 <code>.cmd</code>를 추가했습니다.</li><li><code>node_modules</code>·설정 폴더·임시 폴더는 등록하지 않는 <strong>제외 규칙</strong>과, 실패 원인을 알 수 있는 <strong>오류 종류 기록</strong>을 넣었습니다.</li></ul>
+<p><strong>제거 메뉴 안전 수정</strong></p>
+<ul><li>제거 화면(8번)에서 <code>1</code>·<code>2</code>·<code>3</code> 이외의 잘못된 입력(예: <code>9</code>, <code>n</code>)을 해도 프로그램이 지워지던 문제를 고쳤습니다. 이제 아무것도 지우지 않고 안내만 합니다.</li><li>훅 설치기가 모르는 옵션(예: <code>--dryrun</code> 오타)을 무시하고 실제 설치로 넘어가던 문제를 고쳤습니다. 이제 멈추고 사용법을 알려 줍니다.</li></ul>
+<p><strong>문서</strong></p>
+<ul><li>이 README를 한국어·영어, md·html로 <strong>전면 새로 작성</strong>했습니다. 예전 README의 잘못된 설명(3번이 폴더를 묻지 않는다, "전부 지우기" 확인 순서)을 바로잡았습니다.</li><li><code>사용설명서.md</code>도 같은 부분을 고쳤습니다. (폴더 고르기, 제거 순서, 파일 목록, 계정 종류, 없어진 PDF·영어 가이드 링크 정리)</li></ul></details>
+<details><summary>2026-06-18 · PowerShell 한국어 메뉴로 개편</summary><ul><li>메뉴를 <strong>PowerShell 기반 한국어 메뉴</strong>로 바꿨습니다. (<code>.bat</code>은 영어만 쓰고 메뉴는 <code>menu.ps1</code>이 담당해 글자 깨짐을 막음)</li><li><strong>설치와 실행을 분리</strong>했습니다. ([1] 설치 / [3] 시작)</li><li><strong>화살표 + 번호</strong> 선택을 지원합니다.</li><li><strong>진단·업데이트·제거</strong> 메뉴를 추가했습니다.</li><li>한/영 README, 왕초보 가이드, <code>NOTICE</code>, <code>LICENSE</code>를 정비했습니다.</li><li>로컬 도구·세션 부산물이 저장소에 올라가지 않게 <code>.gitignore</code>를 정리했습니다.</li></ul></details>
+<details><summary>v1.0.0 · 2026-04-20 · 초기 릴리스</summary><ul><li>Claude Code One-Click Kit의 첫 공개 버전입니다. (이 문서가 설명하는 메뉴 구성과는 다릅니다.)</li></ul></details>
+<h3 id="작성-시점에-확인하지-못한-것-알려진-제한">작성 시점에 확인하지 못한 것 (알려진 제한)</h3>
+<p>정직하게 밝힙니다. 아래는 이 문서를 쓴 2026-09-20 기준 <strong>저자가 직접 확인하지 못한 항목</strong>입니다.</p>
+<ul><li><strong>Windows 10</strong>에서의 키트 동작 (Windows 11에서는 확인)</li><li><strong>PowerShell 7</strong>에서의 동작 (Windows PowerShell 5.1에서만 확인)</li><li><strong>다른 PC에서</strong> 선택 기능 설치기를 처음 실행하는 경우</li><li><strong>새 Claude Code 세션</strong>에서 훅이 실제로 호출되는지와, 실제 터미널 화면에서 <code>S</code> 키 동작</li></ul>
+<h2 id="17-파일문서-위치">17. 파일·문서 위치</h2>
+<h3 id="17-1-키트-폴더-이-저장소">17-1. 키트 폴더 (이 저장소)</h3>
+<div class="table-wrap"><table><thead><tr><th>경로</th><th>역할</th></tr></thead><tbody><tr><td><code>Claude-Code_One-Click_Kit.bat</code></td><td>더블클릭 실행 파일 (영어 ASCII만 사용)</td></tr><tr><td><code>menu.ps1</code></td><td>한국어 메뉴 본체 (실제 기능)</td></tr><tr><td><code>README.md</code> · <code>README.html</code></td><td>이 문서 (한국어, md / html)</td></tr><tr><td><code>README.en.md</code> · <code>README.en.html</code></td><td>이 문서의 영어판 (md / html)</td></tr><tr><td><code>사용설명서.md</code></td><td>왕초보용 <strong>짧은</strong> 단계별 가이드 (한국어). 폴더 고르기·제거 순서 등을 이 README에 맞게 고쳤습니다. 자세한 내용은 이 README를 보세요.</td></tr><tr><td><code>LICENSE</code></td><td>Apache License 2.0 전문</td></tr><tr><td><code>NOTICE</code></td><td>저작권·상표·면책 고지</td></tr><tr><td><code>tools\cd-hook\cd-folder-register.cjs</code></td><td>(선택) 훅 본체</td></tr><tr><td><code>tools\cd-hook\install-cd-hook.cjs</code> · <code>install-cd-hook.cmd</code></td><td>(선택) 설치기 / 더블클릭용</td></tr><tr><td><code>tools\cd-hook\check-cd-hook.cjs</code></td><td>(선택) 상태 점검 도구 (읽기 전용)</td></tr><tr><td><code>tools\cd-hook\README-cd-folder-register.md</code></td><td>(선택) 훅 전용 짧은 설명서</td></tr></tbody></table></div>
+<h3 id="17-2-내-컴퓨터의-다른-위치-참고">17-2. 내 컴퓨터의 다른 위치 (참고)</h3>
+<div class="table-wrap"><table><thead><tr><th>무엇</th><th>위치</th></tr></thead><tbody><tr><td>Claude Code 프로그램</td><td><code>%USERPROFILE%\.local\bin\claude.exe</code> (프로그램 파일들: <code>%USERPROFILE%\.local\share\claude</code>)</td></tr><tr><td>Claude 설정·로그인·대화 기록</td><td><code>%USERPROFILE%\.claude</code> 폴더, <code>%USERPROFILE%\.claude.json</code> 파일 (설정 폴더를 옮겨 쓰면 <code>%APPDATA%\claude-code</code> 등)</td></tr><tr><td>폴더 자동 등록 목록 (선택 기능)</td><td><code>%APPDATA%\claude-code\menu-extra-folders.txt</code></td></tr><tr><td>훅 오류 기록 (선택 기능)</td><td><code>%APPDATA%\claude-code\cd-hook-errors.log</code></td></tr><tr><td>훅 설치 위치 (선택 기능)</td><td><code>&lt;Claude 설정 폴더&gt;\hooks</code> (<code>CLAUDE_CONFIG_DIR</code>, 없으면 <code>%USERPROFILE%\.claude</code>)</td></tr><tr><td>설치 전 설정 백업 (선택 기능)</td><td><code>&lt;Claude 설정 폴더&gt;\settings.json.bak-cd-hook-날짜시간</code></td></tr></tbody></table></div>
+<h2 id="18-라이선스--저작권--상표--상업적-이용">18. 라이선스 · 저작권 · 상표 · 상업적 이용</h2>
+<blockquote><p>이 장은 <strong>엄격한 기준</strong>으로 작성했습니다. 이 장은 <strong>법률 자문이 아니며 참고용</strong>이고 법적 효력을 보장하지 않습니다. 상업적 이용이나 재배포처럼 중요한 결정은 <strong>변호사 등 전문가 확인</strong>을 권장합니다. 최종 책임은 사용자에게 있습니다.</p></blockquote>
+<h3 id="18-1-이-키트의-라이선스">18-1. 이 키트의 라이선스</h3>
+<ul><li>이 키트(<code>Claude-Code_One-Click_Kit.bat</code>, <code>menu.ps1</code>, <code>tools\cd-hook</code>의 파일, 이 문서를 포함한 문서)는 <strong>Apache License, Version 2.0</strong>으로 배포됩니다. 전문은 <a href="./LICENSE">LICENSE</a>입니다.</li><li><strong>저작권:</strong> Copyright 2026 <strong>SoDam AI Studio</strong>. 고지 문구는 <a href="./NOTICE">NOTICE</a>에 있습니다.</li><li>라이선스 조건이 무엇인지 아래처럼 요약합니다. (요약일 뿐 <strong>전문이 우선</strong>합니다.)</li></ul>
+<div class="table-wrap"><table><thead><tr><th>하고 싶은 일</th><th>가능한가요?</th><th>지켜야 할 것 (LICENSE 4조 등)</th></tr></thead><tbody><tr><td>개인·회사에서 <strong>사용</strong></td><td>가능</td><td>없음</td></tr><tr><td><strong>상업적으로 이용</strong>·판매·유료 서비스에 포함</td><td>가능</td><td>아래 재배포 조건과 상표 조건을 지킬 것</td></tr><tr><td><strong>수정</strong>해서 사용</td><td>가능</td><td></td></tr><tr><td>그대로 또는 수정해서 <strong>재배포</strong></td><td>가능</td><td>① 받는 사람에게 <strong>LICENSE 사본을 함께 줄 것</strong> ② <strong>수정한 파일에는 수정했다는 표시</strong>를 넣을 것 ③ 원본 소스의 <strong>저작권·특허·상표·출처 고지를 유지할 것</strong> (수정본과 관련 없는 고지는 제외) ④ <strong>NOTICE 파일이 있으면</strong> 그 안의 고지 내용을 수정본 재배포물에 (NOTICE 파일·문서·화면 중 한 곳에) 담을 것</td></tr><tr><td>내 수정본에 <strong>내 저작권 표시·다른 조건</strong> 추가</td><td>가능</td><td>그 밖의 LICENSE 조건은 그대로 지켜야 합니다.</td></tr><tr><td><strong>"SoDam AI Studio" 이름·상표 사용</strong></td><td><strong>허락되지 않음</strong></td><td>LICENSE 6조: 출처를 설명하거나 NOTICE 내용을 옮기는 <strong>합리적·관례적 범위 밖</strong>에서는 상표·상호·제품명 사용 권한을 주지 않습니다.</td></tr><tr><td>특허</td><td>각 기여자가 특허 사용권을 줌</td><td>3조: 이 소프트웨어가 특허를 침해한다고 <strong>소송을 제기하면 그 특허 사용권이 끝납니다.</strong></td></tr></tbody></table></div>
+<ul><li><strong>보증 없음·책임 제한:</strong> LICENSE 7·8조에 따라 "있는 그대로(AS IS)" 제공되며 어떤 보증도 없고, 사용으로 생기는 손해에 대한 책임은 (법이 요구하는 경우를 제외하고) 제한됩니다.</li><li><strong>기여:</strong> 저장소에 기여(Contribution)를 제출하면, 따로 밝히지 않는 한 같은 라이선스(Apache-2.0)가 적용됩니다. (5조)</li></ul>
+<h3 id="18-2-claude-code와-상표-반드시-구분하세요">18-2. Claude Code와 상표 (반드시 구분하세요)</h3>
+<ul><li>이 키트는 <strong>비공식(UNOFFICIAL)</strong> 도우미이며 <strong>Anthropic과 제휴·보증·후원 관계가 없습니다.</strong> (NOTICE 명시)</li><li>이 키트는 Claude Code를 <strong>포함하거나 재배포하지 않습니다.</strong> 실행할 때 <strong>Anthropic 공식 주소</strong>(<code>https://claude.ai/install.ps1</code>)에서 내려받아 설치할 뿐입니다.</li><li><strong>"Claude", "Claude Code", "Anthropic"은 Anthropic의 상표</strong>입니다. 이 문서는 무엇을 설명하는지 밝히는 <strong>식별·설명 목적으로만</strong> 그 이름을 씁니다.</li><li><strong>키트를 재배포할 때 권고:</strong> 공식 제품처럼 보이게 하거나 Anthropic이 보증하는 것처럼 표현하지 마세요. Claude Code 설치 파일을 키트에 <strong>넣어서 배포하는 것</strong>은 이 키트의 라이선스가 정하는 범위 밖이며, Anthropic의 허락 여부는 이 문서가 <strong>확인하지 못했습니다(미확인).</strong> 넣지 마세요.</li></ul>
+<h3 id="18-3-상업적-이용-기준-표로-구분">18-3. 상업적 이용 기준 (표로 구분)</h3>
+<div class="table-wrap"><table><thead><tr><th>대상</th><th>상업적 이용</th><th>근거</th></tr></thead><tbody><tr><td><strong>이 키트</strong>(스크립트·문서)</td><td><strong>가능</strong> (18-1의 조건을 지킬 때)</td><td>Apache License 2.0</td></tr><tr><td><strong>Claude Code</strong>(Anthropic 제품)</td><td><strong>Anthropic 약관이 정함.</strong> 이 문서는 가능 여부를 <strong>판단하지 않습니다.</strong></td><td>본인 계정 종류에 해당하는 Anthropic 약관</td></tr><tr><td><strong>Windows·PowerShell</strong> (Microsoft)</td><td>Microsoft 라이선스</td><td>각 제품의 라이선스</td></tr><tr><td><strong>Node.js·Git</strong> (선택 사항)</td><td>각 프로젝트의 라이선스</td><td>이 키트는 이들을 포함·재배포하지 않고, 사용자가 직접 설치합니다.</td></tr></tbody></table></div>
+<blockquote><p><strong>키트를 상업적으로 써도 되지만, Claude Code의 상업적 사용은 별개로 Anthropic 조건을 따릅니다.</strong> 두 가지를 섞어 생각하지 마세요.</p></blockquote>
+<p><strong>Anthropic 약관 (2026-09-20에 페이지가 열리는 것을 확인. 내용은 바뀔 수 있으니 직접 읽으세요)</strong></p>
+<ul><li>개인용 서비스(Claude.ai 등): <a href="https://www.anthropic.com/legal/consumer-terms">Consumer Terms of Service</a></li><li>기업·API 등: <a href="https://www.anthropic.com/legal/commercial-terms">Commercial Terms of Service</a></li><li>이용 정책: <a href="https://www.anthropic.com/legal/aup">Usage Policy</a></li><li><strong>어느 약관이 내 계정에 적용되는지</strong>는 계정 종류(개인 Pro·Max, 팀·기업, API 등)에 따라 다르며, 이 문서는 그것을 판정하지 않습니다.</li></ul>
+<h3 id="18-4-개인정보">18-4. 개인정보</h3>
+<ul><li>키트 코드는 사용자의 개인정보를 <strong>수집하거나 외부로 전송하지 않습니다.</strong> (13장의 확인 범위 기준)</li><li>Claude Code를 쓸 때 처리되는 대화·파일 정보는 <strong>Anthropic의 정책</strong>을 따르며, 이 문서가 보증하지 않습니다.</li><li><code>menu-extra-folders.txt</code> 등 이 PC에 남는 파일에는 폴더 경로가 있으므로, 공유할 때 주의하세요.</li></ul>
+<h2 id="19-면책-조항">19. 면책 조항</h2>
+<ul><li>이 키트는 <strong>"있는 그대로(AS IS)"</strong> 제공되며 <strong>어떠한 보증도 하지 않습니다.</strong></li><li>이 키트의 사용으로 생기는 <strong>모든 결과·손해에 대한 책임은 사용자 본인</strong>에게 있습니다.</li><li>설치·제거·선택 기능은 <strong>사용자 컴퓨터의 파일과 설정을 만들거나 바꾸거나 지웁니다.</strong> 특히 메뉴 8번 "전부 지우기"는 <strong>되돌릴 수 없습니다.</strong></li><li>Claude Code 사용에 따른 <strong>요금·데이터 처리·결과물의 정확성</strong>은 Anthropic의 약관과 사용자의 판단·책임에 따릅니다. AI의 답은 틀릴 수 있으니 중요한 일은 직접 확인하세요.</li><li>이 문서의 외부 사실(요구사항, 약관, 주소 등)은 2026-09-20에 확인한 것이며, 이후 바뀔 수 있습니다.</li></ul>
+<hr>
+<p>Copyright 2026 SoDam AI Studio · Apache License 2.0 · 비공식 도우미 (Anthropic과 무관)</p>
+</main>
+<a class="chrome-top" href="#top">맨 위로</a>
+</body>
+</html>
