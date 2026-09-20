@@ -5,7 +5,7 @@
 
 **한국어**: [README.md](./README.md) · [README.html](./README.html) / **English**: [README.en.md](./README.en.md) · [README.en.html](./README.en.html)
 
-Document date: 2026-09-20 · License: Apache License 2.0 · Unofficial helper (not affiliated with Anthropic)
+Document date: 2026-09-21 · License: Apache License 2.0 · Unofficial helper (not affiliated with Anthropic)
 
 > **Please read these 5 points before you start**
 >
@@ -122,7 +122,7 @@ git clone https://github.com/sodam-ai/Claude-Code_One-Click_Kit.git
 
 **Recommended location:** a short folder path without special characters, for example `C:\ClaudeKit`. The launcher wraps the path in quotes so Korean characters and spaces are handled, but not every combination was tested. If you run into trouble, move the folder to a short English path.
 
-> **The files you download may differ from this document.** The repository's release tag `v1.0.0` is the **initial version** from 2026-04-20; the folder picker, sorting, and other features described here were added after it. After downloading, press [3] Start: if a screen titled **"어느 폴더에서 시작할까요?" ("Which folder should we start in?")** appears, your version matches this document. If not, it is an older version. (GitHub state checked on 2026-09-20: a public repository, default branch `main`, only one release `v1.0.0`, and the last update to `main` was on 2026-06-18. **Until the new features described in this document are uploaded to the repository, the files you download do not have the folder picker screen.**)
+> **The files you download may differ from this document.** The repository's release `v2.0.0` (2026-09-21) is the first one that includes the folder picker, sorting, and the uninstall-menu safety fix described here. `v1.0.0` (2026-04-20) is the **initial version** and does not have them. After downloading, press [3] Start: if a screen titled **"어느 폴더에서 시작할까요?" ("Which folder should we start in?")** appears, your version matches this document. If not, it is an older version, so get **the latest release from the Releases page**.
 
 **When Windows shows a warning**
 
@@ -661,10 +661,10 @@ Use the Issues page of the repository (<https://github.com/sodam-ai/Claude-Code_
 
 ## 16. Update Summary
 
-Click an item below to expand it. Version numbers follow the repository's tags and commit history, and content that has not been released yet is marked as such.
+Click an item below to expand it. Version numbers follow the repository's tags and commit history.
 
 <details>
-<summary>Next version in preparation (not yet released) · working copy as of 2026-09</summary>
+<summary>v2.0.0 · 2026-09-21 · Folder picker, automatic registration, documentation overhaul</summary>
 
 **Improvements to option 3 (Start)**
 
