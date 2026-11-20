@@ -5,14 +5,14 @@
 
 **한국어**: [README.md](./README.md) · [README.html](./README.html) / **English**: [README.en.md](./README.en.md) · [README.en.html](./README.en.html)
 
-Document date: 2026-09-21 · License: Apache License 2.0 · Unofficial helper (not affiliated with Anthropic)
+Document date: 2026-11-20 · License: Apache License 2.0 · Unofficial helper (not affiliated with Anthropic)
 
 > **Please read these 5 points before you start**
 >
 > 1. This kit is **unofficial**. Claude Code is a product of Anthropic; this kit is not affiliated with, endorsed by, or sponsored by Anthropic.
 > 2. Using Claude Code requires a **paid plan or account**. A free Claude.ai account alone is not enough.
 > 3. This kit is **Windows only**. (It does not work on macOS, Linux, or phones.)
-> 4. Menu **[3] Start** launches Claude Code **and passes every fixed disk in your computer (C:, D:, and so on) as an "additional working directory".** Please read [13. Security and Data Flow](#13-security-and-data-flow).
+> 4. Menu **[3] Start** launches Claude Code **and passes every fixed disk in your computer (C:, D:, and so on) as an "additional working directory".** (If the Claude settings file already lists every disk, the kit does not pass them again; see Chapter 14.) Please read [13. Security and Data Flow](#13-security-and-data-flow).
 > 5. Menu **[8] Uninstall** **really deletes files.** "Delete everything" in particular cannot be undone.
 
 > **The kit's screens are in Korean.** The menu text, prompts, and messages are shown in Korean. This English guide translates every screen you will meet (see 7-2 and the tables in each section).
@@ -316,11 +316,30 @@ Here is what the kit does inside, step by step, explained without code.
    2. It builds the folder list and you choose a folder.
    3. It moves into that folder (`Set-Location`). If that fails (the folder was deleted or renamed), it stops and tells you.
    4. It only **reads** whether Claude already records that folder as "trusted"; if not, it shows the 7-4 notice.
-   5. It runs `claude --add-dir <fixed disks>`. (If it finds no disks, plain `claude`.)
+   5. If the Claude settings file (`settings.json`) already lists every fixed disk under `permissions.additionalDirectories`, it runs plain `claude` (this avoids the "Do you trust this folder?" question appearing on every launch from the home folder); otherwise it runs `claude --add-dir <fixed disks>`. If the settings file is missing, unreadable, or lists only some of the disks, it passes `--add-dir` as before. The kit only **reads** the settings file and never edits it. (If it finds no disks, plain `claude`.)
 6. **[5][6][7]:** they run `claude update`, `claude doctor`, and `claude --version` as they are.
 7. **[8] Uninstall:** see Chapter 12.
 
 That is all the kit does. **The AI's answering itself is done by Claude Code (Anthropic).**
+
+### 8-1. Architecture at a glance
+
+```
+ [Double-click] Claude-Code_One-Click_Kit.bat   <- start file (English/ASCII only)
+        |  runs menu.ps1 (Bypass applies to this window only)
+        v
+   menu.ps1 - the Korean menu and every feature
+     |- [1] Install  --(first time only)--> claude.ai/install.ps1 (internet)
+     |- [3] Start    - folder picker - read only: .claude.json, menu-extra-folders.txt, settings.json
+     |                 `- runs claude  (--add-dir is added only if settings.json lacks some disk)
+     |- [5][6][7]    - claude update, claude doctor, claude --version
+     `- [8] Uninstall - deletes only the files and folders you choose
+   (optional) tools\cd-hook - Claude Code hook --> adds folders to menu-extra-folders.txt
+```
+
+- There are **three parts**: the start file (`.bat`), the menu itself (`menu.ps1`), and the optional feature (`tools\cd-hook`).
+- The kit has **no server, no database, and no account feature.** Everything happens inside your computer, and the only place the kit itself connects to the internet is during installation. (Chapter 13)
+- The part where the AI answers is outside the kit: it is Claude Code itself.
 
 ## 9. Command Reference
 
@@ -489,7 +508,8 @@ This chapter says plainly what runs, what is read, and what leaves your computer
 |---|---|---|
 | `%APPDATA%\claude-code\.claude.json`, `%USERPROFILE%\.claude.json` | **Read only** | To see the list of folders you worked in before and the "this folder is trusted" record. It does not store or send the contents, and it **does not modify** the file. (This file may contain account-related information, so it is handled carefully.) |
 | `%APPDATA%\claude-code\menu-extra-folders.txt` | Read (written by the optional hook) | To add folders you moved into with `cd` to the list |
-| The list of fixed disks | Read | To pass them with `--add-dir` in option 3 |
+| The list of fixed disks | Read | To decide whether to pass them with `--add-dir` in option 3 |
+| The Claude settings file `settings.json` (the `CLAUDE_CONFIG_DIR` folder, otherwise `%USERPROFILE%\.claude`) | **Read only** | To see in option 3 whether every fixed disk is already listed under `permissions.additionalDirectories`. If so, `--add-dir` is skipped. It **does not modify, store, or send** the file, and if it cannot read it, it passes `--add-dir` as before. |
 | The files and folders in Chapter 12, during Uninstall (8) | **Delete** | Only when you explicitly choose it |
 | Any other user files | Not touched | |
 
@@ -498,7 +518,7 @@ This chapter says plainly what runs, what is read, and what leaves your computer
 | What | Why it can be risky | What to do |
 |---|---|---|
 | **Running a script downloaded from the internet right away** ([1] Install, the `irm ... \| iex` style) | It runs downloaded content without checking it, so a fake or hijacked address would be dangerous. | The kit uses **only one Anthropic official address.** If you are still uneasy, install directly from the official page (<https://code.claude.com/docs/en/setup>), which also explains how to verify the signature of the installer. |
-| **Allowing every fixed disk with `--add-dir`** ([3] Start) | Claude is placed in a position where it can work with **files on every fixed disk** (C:, D:, and so on). Whether it asks before changing a file depends on Claude Code's permission settings, and this document does not vouch for those details. | Be careful on a PC that holds important data. If this bothers you, **run `claude` yourself in the folder you want** instead of using the kit's [3]. **Read what the AI asks to do** before you allow it. |
+| **Allowing every fixed disk with `--add-dir`** ([3] Start) | Claude is placed in a position where it can work with **files on every fixed disk** (C:, D:, and so on). Whether it asks before changing a file depends on Claude Code's permission settings, and this document does not vouch for those details. | Be careful on a PC that holds important data. If this bothers you, **run `claude` yourself in the folder you want** instead of using the kit's [3]. **Read what the AI asks to do** before you allow it. If you list disks yourself in the settings file (see 14-1), the same reach is open to every Claude run on this PC. |
 | **Trusting a folder ("Yes, I trust")** | It lets Claude read and run things in that folder. | Choose `Yes` only for folders whose source you know. |
 | **Uninstall (8)** | It really deletes files. | Read Chapter 12 and choose carefully. |
 | **The optional feature (hook)** | It reads the text of every Bash and PowerShell command. It modifies `settings.json`. | It does not store the command text and does not block commands. A backup is made automatically before installing. If you do not want it, do not install it. |
@@ -525,6 +545,7 @@ First, try menu **`6` Diagnose / troubleshoot**. `claude doctor` will tell you t
 | Text shows as boxes | Right-click the top of the window → Properties → set the font to **Malgun Gothic** or **D2Coding.** Using Windows Terminal also helps. |
 | Cannot log in | Check that you have a paid plan/account and that the internet works. To switch accounts, use `/logout` then `/login` inside Claude. |
 | Closes right after `이 폴더는 Claude 로 처음 여는 곳이에요` ("This folder is being opened with Claude for the first time") | In the "trust" prompt, `No, exit` is the default, so pressing only Enter closes it. **Choose `Yes` with ↓** and press Enter. |
+| The `Adding a new directory` ("Do you trust this folder?") question appears on every launch (`C:\` and so on) | When you start from the home folder, Claude asks about each disk passed with `--add-dir`, and your answer given from the home folder is not saved, so it appears **every time.** The default choice is `No, exit`, so **choose `Yes, add it` with ↓** and press Enter. If you want it gone (optional): write **every fixed disk of your PC** into the Claude settings file `settings.json`, inside `permissions`, like `"additionalDirectories": ["C:/", "D:/"]`. The kit then notices and does not pass `--add-dir`. (The author confirmed the question disappears on the author's PC with Claude Code 2.1.329. This makes those disks reachable by **every** Claude run on this PC, so read 13-3 before deciding. If even one disk is missing, the kit passes `--add-dir` as before and the question comes back.) |
 | Still not working | Try installing again with menu **1 Install.** |
 
 ### 14-2. Folder list problems
@@ -597,6 +618,13 @@ It is a convenience so Claude can also work with files on other drives. But **th
 </details>
 
 <details>
+<summary>Q. The "Adding a new directory" question appears on every launch. Can I get rid of it?</summary>
+
+When you start from the home folder, Claude asks about each disk, and your answer given from the home folder is not saved, so it appears every time. The default choice is `No, exit`, so **choose `Yes, add it` with ↓** and press Enter. The optional way to remove it is in the table in 14-1. Note that it leaves disk access open to every Claude run on this PC, so read 13-3 before deciding.
+
+</details>
+
+<details>
 <summary>Q. Claude just closes in a folder I open for the first time.</summary>
 
 Because the default choice in the "Do you trust this folder?" window is `No, exit`. **Choose `Yes, I trust this folder` with ↓ and press Enter.** (See 7-4.)
@@ -664,6 +692,17 @@ Use the Issues page of the repository (<https://github.com/sodam-ai/Claude-Code_
 Click an item below to expand it. Version numbers follow the repository's tags and commit history.
 
 <details>
+<summary>2026-11-20 · Option 3 (Start): fewer repeated questions (before an official version number)</summary>
+
+- Reduced the `Adding a new directory` question that appeared **on every launch** when starting from the home folder.
+- If the Claude settings file (`settings.json`) already lists **every fixed disk** under `permissions.additionalDirectories`, the kit no longer passes `--add-dir`. If the file is missing, unreadable, lists only some disks, or is corrupted, the kit passes `--add-dir` **exactly as before.**
+- The kit only **reads** the settings file and never edits it. If reading fails, no error text appears on screen.
+- Which disks to put in the settings is **your own decision.** (Chapter 14)
+- Also updated Chapter 8 (how it works, architecture), Chapter 13 (data flow), Chapter 14 (troubleshooting), and the FAQ.
+
+</details>
+
+<details>
 <summary>v2.0.0 · 2026-09-21 · Folder picker, automatic registration, documentation overhaul</summary>
 
 **Improvements to option 3 (Start)**
@@ -722,6 +761,7 @@ To be honest: the items below are ones **the author could not confirm directly**
 - How it behaves on **PowerShell 7** (confirmed only on Windows PowerShell 5.1)
 - Running the optional feature's installer for the first time **on another PC**
 - Whether the hook is actually called in a **new Claude Code session**, and how the `S` key behaves on a real terminal screen
+- Whether the question disappears after listing disks in the settings file: **not confirmed on other PCs or other Claude Code versions** (confirmed only on the author's PC with Claude Code 2.1.329, 2026-11-20)
 
 ## 17. File and Document Locations
 
@@ -793,7 +833,7 @@ To be honest: the items below are ones **the author could not confirm directly**
 
 > **You may use the kit commercially, but commercial use of Claude Code separately follows Anthropic's conditions.** Do not mix the two up.
 
-**Anthropic's terms (the pages were confirmed to open on 2026-09-20. Contents may change, so read them yourself)**
+**Anthropic's terms (the pages were confirmed to open on 2026-09-20, and the addresses were confirmed to open again on 2026-11-20. The contents were not re-read and may change, so read them yourself)**
 
 - Personal services (Claude.ai and so on): [Consumer Terms of Service](https://www.anthropic.com/legal/consumer-terms)
 - Business, API, and so on: [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms)
@@ -805,6 +845,43 @@ To be honest: the items below are ones **the author could not confirm directly**
 - The kit's code **does not collect or send** your personal information. (Within the scope checked in Chapter 13.)
 - The conversation and file information processed when you use Claude Code follows **Anthropic's policies**, and this document does not vouch for it.
 - Files left on this PC such as `menu-extra-folders.txt` contain folder paths, so be careful when sharing them.
+- The paths and names in this document and its examples are generic examples; no real personal information, client information, or non-public material was put in. (Checked in the repository and release zip on 2026-11-20: 0 matches for personal paths, emails, or secret-value patterns.) When you share or report screens or files, check yourself that none of your own information is mixed in.
+
+### 18-5. Plain-language summary: how far may I use it?
+
+> The table below is a **plain-language shortening of the license text** and is not legal advice. Anything uncertain is marked "needs confirmation (not verified)".
+
+| What you want to do | For this kit (scripts and documents) | What to take care of |
+|---|---|---|
+| Use it and keep copies on your own computer | Allowed | Nothing |
+| Change it (modify) | Allowed | Mark the files you changed as modified. |
+| Copy it to GitHub and so on (fork) | Allowed (if you follow the license conditions) | Do not remove LICENSE or NOTICE. **Do not use the "SoDam AI Studio" name or marks as if they were yours.** "Claude Code" in the kit's name is an Anthropic trademark, so whether keeping that name is a problem **needs confirmation (not verified).** |
+| Hand it out unchanged (redistribute) | Allowed | Give a copy of LICENSE with it and keep the copyright notices. |
+| Sell it or offer it for a fee | The kit itself: allowed | **Do not advertise it as an Anthropic product.** The right to use Claude Code is separate (Anthropic's terms). |
+| Run it inside a service (web, app, in-house tool) | The kit itself: allowed | Whether letting many people use Claude Code that way fits Anthropic's terms **needs confirmation (not verified).** |
+| Use it as teaching or training material | Allowed | Credit the source (Apache-2.0, SoDam AI Studio) and say it is an "unofficial helper". |
+| Deliver it to a company or client | The kit itself: allowed | Include LICENSE and NOTICE and state "no warranty". **Having a professional check** the liability and warranty wording in the delivery contract is recommended. |
+
+### 18-6. What you must not do
+
+- Remove the kit's LICENSE, NOTICE, or copyright notices and distribute it as your own
+- Use the "SoDam AI Studio" name or marks as your own name or product name (LICENSE Section 6)
+- Present it as made or endorsed by Anthropic (this kit is not affiliated with Anthropic)
+- Put the Claude Code installer inside the kit and distribute it (permission was not confirmed, so do not)
+- Mix other people's works, personal information, or non-public material into the kit and distribute it
+
+### 18-7. What you must check yourself
+
+- **The terms, plans, and usage policy of Claude Code and your Anthropic account** (links in 18-3). Whether commercial use is allowed can depend on your account type, and this document does not judge it.
+- If you connect other services, APIs, or AI models, **that service's terms and fees**
+- The **licenses** of the programs used together with the kit, such as Windows, PowerShell, Node.js, and Git
+- This kit **contains no image, icon, font, video, audio, or sample-data files.** (Checked in the repository and the v2.0.0 release zip on 2026-11-20.) If you add such material yourself, check its terms of use.
+- This kit **contains no external libraries (such as npm packages).** (No dependency files; the optional feature uses only built-in Node.js features, confirmed in the code.) Node.js itself, however, is a program you install separately.
+
+### 18-8. A note on AI-generated material
+
+- The code and documents of this kit **may include parts written or organized with the help of AI tools (such as Claude Code).** (13 of the repository's 16 commits carry an AI co-author mark, as of 2026-11-20.) The author reviews and publishes them, but the **extent to which AI-made output is protected by copyright, its sources, and problems caused by similarity to existing works** may be legally unsettled or differ by country. → **Legal/professional review needed.**
+- Before you publish, sell, or deliver **output you made with Claude Code** (code, text, images, and so on), also **check yourself** its copyright, sources, whether commercial use is allowed, and the possibility of infringing similar works.
 
 ## 19. Disclaimer
 

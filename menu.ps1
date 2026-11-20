@@ -231,6 +231,36 @@ function Test-FolderTrusted($path) {
     return $false
 }
 
+#  --- 사용자 설정에 '모든 디스크'가 이미 등록돼 있는지 -------------------
+#  등록돼 있는데 --add-dir 로 또 넘기면, 켤 때마다 "이 폴더를 믿나요?" 질문이 뜬다.
+#  (홈 폴더에서 켠 신뢰 답은 저장되지 않기 때문.)  그래서 설정에 이미 있으면 안 넘긴다.
+#  원칙: 조금이라도 애매하면 $false → 기존처럼 --add-dir 로 넘긴다(접근 권한을 잃지 않는 쪽).
+#  JSON 파서 대신 정규식으로 읽는다(중복 키가 있으면 파서가 통째로 실패하는 함정 회피).
+function Test-DirsInSettings($dirs) {
+    try {
+        if ($null -eq $dirs -or $dirs.Count -eq 0) { return $false }
+        #  Claude Code 가 실제로 읽는 설정 파일 하나만 본다(엉뚱한 파일을 믿고 접근을 잃지 않도록).
+        if ($env:CLAUDE_CONFIG_DIR) { $base = $env:CLAUDE_CONFIG_DIR }
+        else { $base = Join-Path $env:USERPROFILE '.claude' }
+        $f = Join-Path $base 'settings.json'
+        if (-not (Test-Path -LiteralPath $f)) { return $false }
+        $raw = Get-Content -LiteralPath $f -Raw -Encoding UTF8 -ErrorAction Stop
+        if ([string]::IsNullOrWhiteSpace($raw)) { return $false }
+        $m = [regex]::Match($raw, '"additionalDirectories"\s*:\s*\[(.*?)\]', 'Singleline')
+        if (-not $m.Success) { return $false }
+        $have = @{}
+        foreach ($s in [regex]::Matches($m.Groups[1].Value, '"((?:[^"\\]|\\.)*)"')) {
+            $v = $s.Groups[1].Value.Replace('\\', '/').Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+            $have[$v] = $true
+        }
+        foreach ($d in $dirs) {
+            $k = ([string]$d).Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+            if (-not $have.ContainsKey($k)) { return $false }
+        }
+        return $true
+    } catch { return $false }
+}
+
 #  --- 창 높이에 맞춰 "몇 줄을, 몇 번째부터" 보여줄지 계산 ----------------
 #  $height  : 콘솔 창 높이(줄). 8 은 목록 바깥 줄 수
 #             (제목 1 + 빈줄 1 + ▲ 1 + ▼ 1 + 빈줄 1 + 고른 곳 1 + 안내 1 + 커서 여유 1).
@@ -450,6 +480,9 @@ function Invoke-Start {
         }
     }
 
+    #  설정에 이미 등록돼 있으면 --add-dir 를 생략한다(질문 반복 방지). 애매하면 기존처럼 넘긴다.
+    $skipAddDir = (Test-DirsInSettings $allowDirs)
+
     $startDir = Select-StartFolder
     if ($null -eq $startDir) { return }   # Esc = 취소 (메뉴로 돌아감)
     #  목록을 만든 뒤에 폴더가 지워졌거나 이름이 바뀌었을 수 있다.
@@ -467,7 +500,9 @@ function Invoke-Start {
     Clear-Host
     Show-Line "   실행 위치 : $startDir" 'DarkGray'
     if ($allowDirs.Count -gt 0) {
-        Show-Line ("   파일 접근 허용 : " + ($allowDirs -join '   ')) 'DarkGray'
+        $note = ''
+        if ($skipAddDir) { $note = '   (설정에 등록돼 있어 따로 넘기지 않음)' }
+        Show-Line ("   파일 접근 허용 : " + ($allowDirs -join '   ') + $note) 'DarkGray'
     }
     if (-not (Test-FolderTrusted $startDir)) {
         Write-Host ''
@@ -482,7 +517,7 @@ function Invoke-Start {
     Write-Host '   처음이면 브라우저 로그인 화면이 먼저 나와요.'
     Write-Host '   끝낼 때는 Claude 안에서  /exit  입력.'
     Write-Host ''
-    if ($allowDirs.Count -gt 0) { claude --add-dir $allowDirs } else { claude }
+    if ($allowDirs.Count -gt 0 -and -not $skipAddDir) { claude --add-dir $allowDirs } else { claude }
     Wait-Key
 }
 
