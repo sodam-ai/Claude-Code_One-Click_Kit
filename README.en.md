@@ -122,7 +122,7 @@ git clone https://github.com/sodam-ai/Claude-Code_One-Click_Kit.git
 
 **Recommended location:** a short folder path without special characters, for example `C:\ClaudeKit`. The launcher wraps the path in quotes so Korean characters and spaces are handled, but not every combination was tested. If you run into trouble, move the folder to a short English path.
 
-> **The files you download may differ from this document.** The repository's release `v2.0.0` (2026-09-21) is the first one that includes the folder picker, sorting, and the uninstall-menu safety fix described here. `v1.0.0` (2026-04-20) is the **initial version** and does not have them. After downloading, press [3] Start: if a screen titled **"어느 폴더에서 시작할까요?" ("Which folder should we start in?")** appears, your version matches this document. If not, it is an older version, so get **the latest release from the Releases page**.
+> **The files you download may differ from this document.** The repository's release `v2.0.0` (2026-09-21) is the first one that includes the folder picker, sorting, and the uninstall-menu safety fix described here. `v1.0.0` (2026-04-20) is the **initial version** and does not have them. `v2.0.1` (2026-11-20) adds the settings integration of [3] Start (skipping `--add-dir`) and the LICENSE cleanup. After downloading, press [3] Start: if a screen titled **"어느 폴더에서 시작할까요?" ("Which folder should we start in?")** appears, your version matches this document. If not, it is an older version, so get **the latest release from the Releases page**.
 
 **When Windows shows a warning**
 
@@ -692,13 +692,14 @@ Use the Issues page of the repository (<https://github.com/sodam-ai/Claude-Code_
 Click an item below to expand it. Version numbers follow the repository's tags and commit history.
 
 <details>
-<summary>2026-11-20 · Option 3 (Start): fewer repeated questions (before an official version number)</summary>
+<summary>v2.0.1 · 2026-11-20 · Option 3 (Start): fewer repeated questions, LICENSE cleanup, documentation additions</summary>
 
 - Reduced the `Adding a new directory` question that appeared **on every launch** when starting from the home folder.
 - If the Claude settings file (`settings.json`) already lists **every fixed disk** under `permissions.additionalDirectories`, the kit no longer passes `--add-dir`. If the file is missing, unreadable, lists only some disks, or is corrupted, the kit passes `--add-dir` **exactly as before.**
 - The kit only **reads** the settings file and never edits it. If reading fails, no error text appears on screen.
 - Which disks to put in the settings is **your own decision.** (Chapter 14)
-- Also updated Chapter 8 (how it works, architecture), Chapter 13 (data flow), Chapter 14 (troubleshooting), and the FAQ.
+- Also updated Chapter 8 (how it works, architecture), Chapter 13 (data flow), Chapter 14 (troubleshooting), and the FAQ, and added "plain-language summary, what you must not do, what you must check yourself, and a note on AI-generated material" (18-5 to 18-8) to Chapter 18.
+- Made `LICENSE` line-for-line identical to the official Apache-2.0 text from apache.org. (The words were already the same and only the line wrapping differed, so the legal meaning is the same.)
 
 </details>
 
