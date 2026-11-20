@@ -316,7 +316,7 @@ Here is what the kit does inside, step by step, explained without code.
    2. It builds the folder list and you choose a folder.
    3. It moves into that folder (`Set-Location`). If that fails (the folder was deleted or renamed), it stops and tells you.
    4. It only **reads** whether Claude already records that folder as "trusted"; if not, it shows the 7-4 notice.
-   5. It runs `claude --add-dir <fixed disks>`. (If it finds no disks, plain `claude`.)
+   5. If the Claude settings file (`settings.json`) already lists every fixed disk under `permissions.additionalDirectories`, it runs plain `claude` (this avoids the "Do you trust this folder?" question appearing on every launch from the home folder); otherwise it runs `claude --add-dir <fixed disks>`. If the settings file is missing, unreadable, or lists only some of the disks, it passes `--add-dir` as before. The kit only **reads** the settings file and never edits it. (If it finds no disks, plain `claude`.)
 6. **[5][6][7]:** they run `claude update`, `claude doctor`, and `claude --version` as they are.
 7. **[8] Uninstall:** see Chapter 12.
 
