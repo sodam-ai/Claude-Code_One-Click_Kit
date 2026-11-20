@@ -244,7 +244,7 @@ function Test-DirsInSettings($dirs) {
         else { $base = Join-Path $env:USERPROFILE '.claude' }
         $f = Join-Path $base 'settings.json'
         if (-not (Test-Path -LiteralPath $f)) { return $false }
-        $raw = Get-Content -LiteralPath $f -Raw -Encoding UTF8
+        $raw = Get-Content -LiteralPath $f -Raw -Encoding UTF8 -ErrorAction Stop
         if ([string]::IsNullOrWhiteSpace($raw)) { return $false }
         $m = [regex]::Match($raw, '"additionalDirectories"\s*:\s*\[(.*?)\]', 'Singleline')
         if (-not $m.Success) { return $false }
